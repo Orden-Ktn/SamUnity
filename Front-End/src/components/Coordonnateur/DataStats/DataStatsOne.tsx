@@ -63,7 +63,7 @@ const Table = () => {
       }
     };
 
-    fetchEnfants();
+    fetchEnfants(); 
   }, []);
 
   useEffect(() => {

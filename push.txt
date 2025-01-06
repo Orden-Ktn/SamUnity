@@ -4,4 +4,12 @@ git add .
 git commit -m "Modification des fichiers"
 
 
-git push origin master
+git push
+
+
+
+
+
+
+
+
