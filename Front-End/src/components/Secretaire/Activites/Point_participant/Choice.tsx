@@ -145,30 +145,30 @@ const Choice = () => {
               <div>
                 <h2 className="text-center text-dark text-lg font-semibold">
                   Paroisse Sainte Bernadette Soubirous de Hêvié Dodji <br />
-                  Liste des participants {activity}
+                  Liste des participants {activity} <br />
                 </h2>
                 <table className="w-full border-collapse border">
                   <thead>
                     <tr className="bg-gray-200">
-                      <th className="border px-4 py-2">N°</th>
-                      <th className="border px-4 py-2">Nom</th>
-                      <th className="border px-4 py-2">Prénom</th>
-                      <th className="border px-4 py-2">Niveau</th>
+                      <th className="border px-4 py-2 text-dark">N°</th>
+                      <th className="border px-4 py-2 text-dark">Nom</th>
+                      <th className="border px-4 py-2 text-dark">Prénom</th>
+                      <th className="border px-4 py-2 text-dark">Niveau</th>
                     </tr>
                   </thead>
                   <tbody>
                     {results.map((item, index) => (
                       <tr key={item.id}>
-                        <td className="border px-4 py-2">{index + 1}</td>
-                        <td className="border px-4 py-2">{item.nom}</td>
-                        <td className="border px-4 py-2">{item.prenom}</td>
-                        <td className="border px-4 py-2">{item.niveau}</td>
+                        <td className="border px-4 py-2 text-dark-900">{index + 1}</td>
+                        <td className="border px-4 py-2 text-dark-900">{item.nom}</td>
+                        <td className="border px-4 py-2 text-dark-900">{item.prenom}</td>
+                        <td className="border px-4 py-2 text-dark-900">{item.niveau}</td>
                       </tr>
                     ))}
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td colSpan={4} className="text-center font-semibold">
+                      <td colSpan={4} className="text-center font-semibold py-2 text-dark">
                         Effectif Total : {totalParticipants}
                       </td>
                     </tr>
@@ -179,6 +179,16 @@ const Choice = () => {
               <p className="text-center">Aucune donnée trouvée.</p>
             )}
           </div>
+
+          <div className="flex flex-col">
+            <button
+              onClick={handleDownloadPDF}
+              className="rounded-full bg-green px-10 py-3.5 text-white lg:px-8 xl:px-10"
+            >
+              Obtenir la version PDF
+            </button>
+          </div>
+
         </div>
       </div>
     </>
