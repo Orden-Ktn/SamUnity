@@ -111,6 +111,10 @@ class Objectif_SG(models.Model):
     objectif = models.CharField(max_length=5000)
     annee = models.CharField(max_length=255)
 
+class Objectif_FO(models.Model):
+    objectif = models.CharField(max_length=5000)
+    annee = models.CharField(max_length=255)
+
 class Activite(models.Model):
     intitule = models.CharField(max_length=5000)
     annee = models.CharField(max_length=255)

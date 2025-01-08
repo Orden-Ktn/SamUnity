@@ -231,7 +231,7 @@ export default function Ajout_bilan() {
 
                   <div className="w-1/2">
                     <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-                      Nom
+                      Nom & Prénom
                     </label>
                     <select
                       name="nom"

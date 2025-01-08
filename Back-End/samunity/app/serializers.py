@@ -100,6 +100,12 @@ class Objectif_SGSerializer(serializers.ModelSerializer):
         fields = ['objectif', 'annee']
 
 
+class Objectif_FOSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Objectif_FO
+        fields = ['objectif', 'annee']
+
+
 class MontantCalculeSerializer(serializers.ModelSerializer):
     class Meta:
         model = MontantCalcule

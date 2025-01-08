@@ -41,6 +41,7 @@ const menuGroups = [
         label: "Dashboard",
         route: "/Secretaire/dashboard",
       },
+      
       {
         icon: (
           <svg
@@ -73,8 +74,12 @@ const menuGroups = [
             route: "/Secretaire/enfant_samuel/ajout_enfant_samuel",
           },
           {
-            label: "Liste des enfants",
+            label: "Liste par grade",
             route: "/Secretaire/enfant_samuel/liste_grade",
+          },
+          {
+            label: "Liste générale",
+            route: "/Secretaire/enfant_samuel/liste_generale",
           },
         ],
       },

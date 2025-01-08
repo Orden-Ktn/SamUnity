@@ -534,6 +534,32 @@ def get_objectifs_organisation(request):
 
 
 @api_view(['POST'])
+def ajout_objectif_formation(request):
+    if request.method == 'POST':
+        # Récupérer l'année active
+        annee_active = Annee_pastorale.objects.filter(statut='actif').first()  # Ajustez cette requête selon votre logique
+        if not annee_active:
+            return Response({"error": "Aucune année active trouvée."}, status=status.HTTP_404_NOT_FOUND)
+
+        # Ajouter l'année active aux données de la requête
+        data = request.data
+        data['annee'] = annee_active.annee  # Assurez-vous que 'annee' est le bon champ
+
+        serializer = Objectif_FOSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def get_objectifs_formation(request):
+    annee_active = Annee_pastorale.objects.filter(statut='actif').first()
+    objectif = Objectif_FO.objects.filter(annee=annee_active.annee)
+    serializer = Objectif_FOSerializer(objectif, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
 def ajout_activite(request):
     if request.method == 'POST':
         # Récupérer l'année active
@@ -636,8 +662,7 @@ def ajout_participant(request):
 @api_view(['GET'])
 def get_participant(request):
     annee_active = Annee_pastorale.objects.filter(statut='actif').first()
-    activite = "Prise d'aube"
-    participant = Participant_Activite.objects.filter(annee=annee_active.annee, activite=activite)
+    participant = Participant_Activite.objects.filter(annee=annee_active.annee).order_by('nom')
     serializer = Participant_ActiviteSerializer(participant, many=True)
     return Response(serializer.data)
 
@@ -646,7 +671,7 @@ def search_activity(request):
     activity = request.GET.get('activity')
     if activity:
         # Filtrer les résultats en fonction de l'activité
-        results = Participant_Activite.objects.filter(activite=activity)
+        results = Participant_Activite.objects.filter(activite=activity).order_by('nom')
 
         data = [{"id": item.id, "nom": item.nom, "prenom": item.prenom, "niveau": item.niveau} for item in results]
         return JsonResponse(data, safe=False)
@@ -677,10 +702,11 @@ def ajout_enfant(request):
 @api_view(['GET'])
 def get_enfant(request):
     annee_active = Annee_pastorale.objects.filter(statut='actif').first()
-    contenu = Enfant.objects.filter(annee=annee_active.annee).order_by('nom')
+    contenu = Enfant.objects.filter(annee=annee_active.annee).order_by('niveau', 'nom')
     serializer = EnfantSerializer(contenu, many=True)
     
     return Response(serializer.data)
+
 
 @require_GET
 def search_niveau(request):

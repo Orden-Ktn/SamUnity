@@ -58,7 +58,7 @@ const Table = () => {
                   <option value="Postulat">Postulat</option>
                   <option value="Stage">Stage</option>
                   <option value="Acolytat">Acolytat</option>
-                  <option value="Porte-Bénitier">Porte-Bénitier</option>
+                  <option value="Porte-bénitier">Porte-bénitier</option>
                   <option value="Céroféraire">Céroféraire</option>
                   <option value="Porte-Croix">Porte-Croix</option>
                 </select>

@@ -60,6 +60,10 @@ urlpatterns = [
     path('ajout_objectif_organisation/', views.ajout_objectif_organisation, name='ajout_objectif_organisation'),
     path("all_objectifs_organisation/", views.get_objectifs_organisation, name="all_objectifs_organisation"),
 
+#Objectif FO
+    path('ajout_objectif_formation/', views.ajout_objectif_formation, name='ajout_objectif_formation'),
+    path("all_objectifs_formation/", views.get_objectifs_formation, name="all_objectifs_formation"),
+
 #Activités
     path('ajout_activite/', views.ajout_activite, name='ajout_activite'),
     path("all_activite/", views.get_activite, name="all_activite"),

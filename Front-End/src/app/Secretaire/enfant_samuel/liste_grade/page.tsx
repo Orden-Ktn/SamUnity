@@ -1,6 +1,5 @@
 import Breadcrumb from "@/components/Secretaire/Breadcrumbs/Breadcrumb";
 import Choice from "@/components/Secretaire/Enfant_samuel/Liste_grade/Choice";
-import Table from "@/components/Secretaire/Enfant_samuel/Liste_grade/Table";
 import DefaultLayout from "@/components/Secretaire/Layouts/DefaultLaout";
 import { Metadata } from "next";
 

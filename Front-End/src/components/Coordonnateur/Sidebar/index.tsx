@@ -91,7 +91,7 @@ const menuGroups = [
             route: "/Coordonnateur/annee_pastorale/ajout_annee_pastorale",
           },
           {
-            label: "Liste des années pastorales",
+            label: "Activation d'année pastorale",
             route: "/Coordonnateur/annee_pastorale/all_annee_pastorale",
           },
         ],

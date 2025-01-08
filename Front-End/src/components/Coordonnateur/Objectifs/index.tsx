@@ -10,11 +10,13 @@ export default function Ajout_objectif() {
   const [savedDataTG, setSavedDataTG] = useState<any[]>([]);
   const [savedDataOG, setSavedDataOG] = useState<any[]>([]);
   const [savedDataSG, setSavedDataSG] = useState<any[]>([]);
+  const [savedDataFO, setSavedDataFO] = useState<any[]>([]);
 
   useEffect(() => {
     fetchObjectifsTG();
     fetchObjectifsOG();
     fetchObjectifsSG();
+    fetchObjectifsFO();
   }, []);
 
   const fetchObjectifsOG = async () => {
@@ -27,7 +29,21 @@ export default function Ajout_objectif() {
         setSavedDataOG(data);
       }
     } catch (error) {
-      console.error("Erreur lors de la récupération des objectifs :", error);
+      console.error("Erreur lors de la récupération des objectifs de l'organisation:", error);
+    }
+  };
+
+  const fetchObjectifsFO = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/app/all_objectifs_formation/",
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setSavedDataFO(data);
+      }
+    } catch (error) {
+      console.error("Erreur lors de la récupération des objectifs de la formation:", error);
     }
   };
 
@@ -41,7 +57,7 @@ export default function Ajout_objectif() {
         setSavedDataSG(data);
       }
     } catch (error) {
-      console.error("Erreur lors de la récupération des objectifs :", error);
+      console.error("Erreur lors de la récupération des objectifs du secrétariat:", error);
     }
   };
 
@@ -55,7 +71,7 @@ export default function Ajout_objectif() {
         setSavedDataTG(data);
       }
     } catch (error) {
-      console.error("Erreur lors de la récupération des objectifs :", error);
+      console.error("Erreur lors de la récupération des objectifs de la trésorerie:", error);
     }
   };
 
@@ -68,6 +84,30 @@ export default function Ajout_objectif() {
           {/* Tableau des objectifs */}
 
           <div className="flex flex-col gap-5.5 rounded-[10px] border border-stroke bg-white p-6.5 shadow-1">
+          <div className="overflow-x-auto">
+              <table className="w-full table-auto border-collapse border border-gray-200">
+                <thead>
+                  <tr className="bg-green-200">
+                    <th className="border border-gray-300 px-4 py-2">
+                      Contenu des Objectifs de la Formation
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {savedDataFO.map((item) => (
+                    <tr key={item.id}>
+                      <td className="border border-gray-300 px-4 py-2">
+                        {item.objectif}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {savedDataFO.length === 0 && (
+                <p className="mt-4 text-center">Aucun objectif enregistré.</p>
+              )}
+            </div>
+
             <div className="overflow-x-auto">
               <table className="w-full table-auto border-collapse border border-gray-200">
                 <thead>
