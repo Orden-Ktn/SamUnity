@@ -122,6 +122,34 @@ const menuGroups = [
       {
         icon: (
           <svg
+            className="fill-current text-blue-500"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M3 21v-3l13.5-13.5 3 3L6 21H3z" fill="currentColor" />
+            <path d="M14.5 4.5l3 3 1.5-1.5-3-3-1.5 1.5z" fill="currentColor" />
+          </svg>
+        ),
+        label: "Notes",
+        route: "#",
+        children: [
+        {
+          label: "Insertion de note",
+          route: "/Secretaire/note/ajout_note",
+        },
+        {
+          label: "Fiche de note",
+          route: "/Secretaire/note/fiche_note",
+        },
+      ],
+      },
+
+      {
+        icon: (
+          <svg
             className="fill-current text-pink-500"
             width="24"
             height="24"
@@ -166,6 +194,37 @@ const menuGroups = [
         label: "Dépôt d'épreuve",
         route: "/Secretaire/depot_epreuve",
       },
+
+      {
+        icon: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 48 48"
+            className="fill-current"
+          >
+            <path fill="#4285F4" d="M25.5 4L5.1 39.9 10 48h28l4.9-8.1L25.5 4z"/>
+            <path fill="#34A853" d="M5.1 39.9L10 48h28l4.9-8.1H5.1z"/>
+            <path fill="#FBBC05" d="M25.5 4L5.1 39.9h9.9l16.5-27L25.5 4z"/>
+            <path fill="#EA4335" d="M35.5 39.9h9.9L25.5 4l-4.9 8.1L35.5 39.9z"/>
+          </svg>
+        ),
+        
+        label: "Dossier Drive",
+        route: "#",
+        children: [
+        {
+          label: "Secrétariat",
+          route: "https://drive.google.com/drive/folders/13-t6pHkzrbAYQ-IEI0lLJJinD8GZP4-g?usp=sharing",
+        },
+        {
+          label: "Audiovisuel",
+          route: "https://drive.google.com/drive/folders/1bQklZsJm3AYwmuP3AAJqMN_1w7db6as5?usp=sharing",
+        },
+        ]
+      },
+
     ],
   },
 ];

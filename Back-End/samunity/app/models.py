@@ -22,11 +22,12 @@ class User(models.Model):
         return self.nom
 
 
-
 class Depot_epreuve(models.Model):
     epreuve = models.FileField(upload_to='epreuves/')
     corrige_type = models.FileField(upload_to='corriges/')
     niveau = models.CharField(max_length=255)
+    test = models.CharField(max_length=255)
+    annee = models.CharField(max_length=255)
 
     def __str__(self):
         return f"{self.niveau} - {self.epreuve.name} - {self.corrige_type.name}"
@@ -164,3 +165,13 @@ class Enfant(models.Model):
     niveau_etude = models.CharField(max_length=700)
     catechese = models.CharField(max_length=700)
     annee = models.CharField(max_length=255)
+
+
+class Note(models.Model):
+    enfant = models.ForeignKey(Enfant, on_delete=models.CASCADE)
+    option = models.CharField(max_length=100)
+    note = models.FloatField()
+    date_ajout = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.enfant.nom} - {self.option} - {self.note}"

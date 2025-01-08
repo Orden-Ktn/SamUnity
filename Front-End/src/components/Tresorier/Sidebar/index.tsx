@@ -185,6 +185,36 @@ const menuGroups = [
       {
         icon: (
           <svg
+            className="fill-current text-blue-500"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 2C7.03 2 3 4.13 3 6.5S7.03 11 12 11s9-2.13 9-4.5S16.97 2 12 2zm0 7c-3.87 0-7-1.57-7-2.5S8.13 4 12 4s7 1.57 7 2.5S15.87 9 12 9zm-9 4.5c0 1.95 3.58 4.5 9 4.5s9-2.55 9-4.5v-2c-1.5 1.3-4.5 2-9 2s-7.5-.7-9-2v2zm0 4c0 1.95 3.58 4.5 9 4.5s9-2.55 9-4.5v-2c-1.5 1.3-4.5 2-9 2s-7.5-.7-9-2v2z"
+              fill="currentColor"
+            />
+          </svg>
+        ),
+        label: "Etat de la caisse",
+        route: "#",
+        children: [
+          {
+            label: "Ancien solde",
+            route: "/Tresorier/etat_caisse/ajout_ancien_solde",
+          },
+          {
+            label: "Solde courant",
+            route: "/Tresorier/etat_caisse/nouveau_solde",
+          },
+        ],
+      },
+      
+      {
+        icon: (
+          <svg
             className="fill-current text-teal-700"
             width="24"
             height="24"
@@ -213,37 +243,35 @@ const menuGroups = [
           },
         ],
       },
-
+      
       {
         icon: (
           <svg
-            className="fill-current text-blue-500"
+            className="fill-current text-indigo-700"
             width="24"
             height="24"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path
-              d="M12 2C7.03 2 3 4.13 3 6.5S7.03 11 12 11s9-2.13 9-4.5S16.97 2 12 2zm0 7c-3.87 0-7-1.57-7-2.5S8.13 4 12 4s7 1.57 7 2.5S15.87 9 12 9zm-9 4.5c0 1.95 3.58 4.5 9 4.5s9-2.55 9-4.5v-2c-1.5 1.3-4.5 2-9 2s-7.5-.7-9-2v2zm0 4c0 1.95 3.58 4.5 9 4.5s9-2.55 9-4.5v-2c-1.5 1.3-4.5 2-9 2s-7.5-.7-9-2v2z"
-              fill="currentColor"
-            />
+            <path d="M3 21v-3l13.5-13.5 3 3L6 21H3z" fill="currentColor" />
+            <path d="M14.5 4.5l3 3 1.5-1.5-3-3-1.5 1.5z" fill="currentColor" />
           </svg>
         ),
-        label: "Etat de la caisse",
+        label: "Notes",
         route: "#",
         children: [
-          {
-            label: "Ancien solde",
-            route: "/Tresorier/etat_caisse/ajout_ancien_solde",
-          },
-          {
-            label: "Solde courant",
-            route: "/Tresorier/etat_caisse/nouveau_solde",
-          },
-        ],
+        {
+          label: "Insertion de note",
+          route: "/Tresorier/note/ajout_note",
+        },
+        {
+          label: "Fiche de note",
+          route: "/Tresorier/note/fiche_note",
+        },
+      ],
       },
-      
+
       {
         icon: (
           <svg
@@ -290,6 +318,26 @@ const menuGroups = [
         ),
         label: "Dépôt d'épreuve",
         route: "/Tresorier/depot_epreuve",
+      },
+
+      {
+        icon: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 48 48"
+            className="fill-current"
+          >
+            <path fill="#4285F4" d="M25.5 4L5.1 39.9 10 48h28l4.9-8.1L25.5 4z"/>
+            <path fill="#34A853" d="M5.1 39.9L10 48h28l4.9-8.1H5.1z"/>
+            <path fill="#FBBC05" d="M25.5 4L5.1 39.9h9.9l16.5-27L25.5 4z"/>
+            <path fill="#EA4335" d="M35.5 39.9h9.9L25.5 4l-4.9 8.1L35.5 39.9z"/>
+          </svg>
+        ),
+        
+        label: "Dossier Drive Trésorerie",
+        route: "https://drive.google.com/drive/folders/1EcDDrfbUOJtwbqoWnCbi0yOf7c1Fmec7?usp=sharing",
       },
     ],
   },

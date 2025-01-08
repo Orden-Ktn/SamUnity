@@ -138,6 +138,34 @@ const menuGroups = [
       {
         icon: (
           <svg
+            className="fill-current text-blue-500"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M3 21v-3l13.5-13.5 3 3L6 21H3z" fill="currentColor" />
+            <path d="M14.5 4.5l3 3 1.5-1.5-3-3-1.5 1.5z" fill="currentColor" />
+          </svg>
+        ),
+        label: "Notes",
+        route: "#",
+        children: [
+        {
+          label: "Insertion de note",
+          route: "/Coordonnateur/note/ajout_note",
+        },
+        {
+          label: "Fiche de note",
+          route: "/Coordonnateur/note/fiche_note",
+        },
+      ],
+      },
+
+      {
+        icon: (
+          <svg
             className="fill-current text-pink-500"
             width="24"
             height="24"
@@ -286,6 +314,5 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     </ClickOutside>
   );
 };
-
 
 export default Sidebar;

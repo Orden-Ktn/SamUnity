@@ -82,7 +82,14 @@ export default function Ajout_bilan() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name === "nom") {
+      const [nom, prenom] = value.split(","); // Divise la valeur en nom et prénom
+      setFormData({ ...formData, nom, prenom }); // Met à jour séparément
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -232,11 +239,15 @@ export default function Ajout_bilan() {
                       onChange={handleChange}
                       className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
                     >
-                      <option value="">Choississez un enfant</option>
+                      <option value="">Choisissez un enfant</option>
                       {enfant.length > 0 ? (
                         enfant.map((enfants) => (
-                          <option key={enfants.id} value={enfants.nom}>
-                            {enfants.nom}
+                          <option
+                            key={enfants.id}
+                            value={`${enfants.nom},${enfants.prenom}`} // Enregistre les deux valeurs séparées par une virgule
+                          >
+                            {enfants.nom} {enfants.prenom}{" "}
+                            {/* Affiche nom + prénom */}
                           </option>
                         ))
                       ) : (
@@ -244,32 +255,6 @@ export default function Ajout_bilan() {
                       )}
                     </select>
                   </div>
-
-                  <div className="w-1/2">
-                    <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-                      Prénom
-                    </label>
-                    <select
-                      name="prenom"
-                      value={formData.prenom}
-                      onChange={handleChange}
-                      className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
-                    >
-                      <option value="">Choississez un enfant</option>
-                      {enfant.length > 0 ? (
-                        enfant.map((enfants) => (
-                          <option key={enfants.id} value={enfants.prenom}>
-                            {enfants.prenom}
-                          </option>
-                        ))
-                      ) : (
-                        <option value="">Aucun enfant enregistré</option>
-                      )}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="flex gap-6">
                   <div className="w-1/2">
                     <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
                       Etape/Grade
@@ -319,7 +304,9 @@ export default function Ajout_bilan() {
                       </option>
                     </select>
                   </div>
+                </div>
 
+                <div className="flex gap-6">
                   <button
                     type="submit"
                     className="w-full rounded-lg bg-green p-2 text-white"

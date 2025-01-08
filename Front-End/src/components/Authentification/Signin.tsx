@@ -32,7 +32,7 @@ export default function SigninWithPassword() {
             window.location.href = "/Secretaire/dashboard";
             break;
           case "Initiateur":
-            window.location.href = "/Initiateur/dashboard";
+            window.location.href = "/Formateur/dashboard";
             break;
           case "Trésorier":
             window.location.href = "/Tresorier/dashboard";

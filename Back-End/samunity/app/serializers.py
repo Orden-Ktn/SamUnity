@@ -18,18 +18,18 @@ class UserSerializer(serializers.ModelSerializer):
 class Depot_epreuveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Depot_epreuve
-        fields = ['epreuve', 'corrige_type', 'niveau']
+        fields = ['epreuve', 'corrige_type', 'niveau', 'test', 'annee']
 
     def validate_epreuve(self, value):
-        allowed_extensions = ['.docx', '.xlsx', '.pdf']
+        allowed_extensions = ['.docx']
         if not any(value.name.endswith(ext) for ext in allowed_extensions):
-            raise serializers.ValidationError("Le fichier doit être un fichier Word, Excel ou PDF.")
+            raise serializers.ValidationError("Le fichier doit être un fichier Word.")
         return value
 
     def validate_corrige_type(self, value):
-        allowed_extensions = ['.docx', '.xlsx', '.pdf']
+        allowed_extensions = ['.docx']
         if not any(value.name.endswith(ext) for ext in allowed_extensions):
-            raise serializers.ValidationError("Le fichier doit être un fichier Word, Excel ou PDF.")
+            raise serializers.ValidationError("Le fichier doit être un fichier Word.")
         return value
 
 
@@ -143,3 +143,9 @@ class EnfantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Enfant
         fields = ['nom', 'prenom', 'age', 'niveau_etude', 'niveau', 'catechese', 'annee']
+
+
+class NoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Note
+        fields = '__all__'

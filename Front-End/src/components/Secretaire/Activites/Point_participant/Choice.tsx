@@ -145,7 +145,7 @@ const Choice = () => {
               <div>
                 <h2 className="text-center text-dark text-lg font-semibold">
                   Paroisse Sainte Bernadette Soubirous de Hêvié Dodji <br />
-                  Liste des participants {activity} <br />
+                  Liste des participants {activity} <br /><br />
                 </h2>
                 <table className="w-full border-collapse border">
                   <thead>
@@ -159,10 +159,10 @@ const Choice = () => {
                   <tbody>
                     {results.map((item, index) => (
                       <tr key={item.id}>
-                        <td className="border px-4 py-2 text-dark-900">{index + 1}</td>
-                        <td className="border px-4 py-2 text-dark-900">{item.nom}</td>
-                        <td className="border px-4 py-2 text-dark-900">{item.prenom}</td>
-                        <td className="border px-4 py-2 text-dark-900">{item.niveau}</td>
+                        <td className="border px-4 py-2 text-dark text-center">{index + 1}</td>
+                        <td className="border px-4 py-2 text-dark text-center">{item.nom}</td>
+                        <td className="border px-4 py-2 text-dark text-center">{item.prenom}</td>
+                        <td className="border px-4 py-2 text-dark text-center">{item.niveau}</td>
                       </tr>
                     ))}
                   </tbody>

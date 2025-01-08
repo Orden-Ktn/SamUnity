@@ -113,7 +113,10 @@ const Choice = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {results.map((item, index) => (
+                    
+                    {results
+                    .sort((a, b) => a.nom.localeCompare(b.nom)) 
+                    .map((item, index) => (
                       <tr key={item.id}>
                         <td className="border px-4 py-2 text-center text-black">
                           {index + 1}

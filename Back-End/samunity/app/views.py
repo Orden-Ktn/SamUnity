@@ -14,8 +14,10 @@ from django.db.models import Sum
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpRequest
 from django.views.decorators.http import require_GET
+from django.db.models import Prefetch
 
-@api_view(['POST'])
+#Authentification
+@api_view(['POST']) 
 def create_user(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
@@ -50,7 +52,6 @@ def create_user(request):
     
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 @api_view(['POST'])
 def login_user(request):
     nom = request.data.get('nom')
@@ -69,10 +70,20 @@ def login_user(request):
         return Response({'detail': 'Mot de passe incorrect.'}, status=status.HTTP_400_BAD_REQUEST)
     
 
+#Epreuves
 @api_view(['POST'])
 @parser_classes([MultiPartParser, FormParser])  # Accepte multipart/form-data pour les fichiers
 def depot_epreuve(request):
     if request.method == 'POST':
+        # Récupérer l'année active
+        annee_active = Annee_pastorale.objects.filter(statut='actif').first()  # Ajustez cette requête selon votre logique
+        if not annee_active:
+            return Response({"error": "Aucune année active trouvée."}, status=status.HTTP_404_NOT_FOUND)
+
+        # Ajouter l'année active aux données de la requête
+        data = request.data
+        data['annee'] = annee_active.annee  # Assurez-vous que 'annee' est le bon champ
+
         print("Received data:", request.data)  # Debug
         serializer = Depot_epreuveSerializer(data=request.data)
         
@@ -81,8 +92,16 @@ def depot_epreuve(request):
             return Response({"message": "Epreuve ajoutée avec succès!"}, status=201)
         else:
             return Response(serializer.errors, status=400)
+
+@api_view(['GET'])
+def all_epreuves(request):
+    annee_active = Annee_pastorale.objects.filter(statut='actif').first()
+    epreuves = Depot_epreuve.objects.filter(annee=annee_active.annee)
+    serializer = Depot_epreuveSerializer(epreuves, many=True)
+    return Response(serializer.data)
         
 
+#Année pastorale
 @api_view(['POST'])
 def ajout_annee_pastorale(request):
     serializer = Ajout_annee_pastoraleSerializer(data=request.data)
@@ -121,6 +140,8 @@ def get_annee_active(request):
         return Response({'annee': annee_active.annee})  # Retourner l'année active
     return Response({'annee': 'Non définie'})  # Si aucun résultat trouvé
 
+
+#Cotisation Enfants
 @api_view(['POST'])
 def ajout_cotisation_enfant(request):
     if request.method == 'POST':
@@ -167,14 +188,6 @@ def ajout_cotisation_animateur(request):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-@api_view(['GET'])
-def cotisation_animateur_list(request):
-    annee_active = Annee_pastorale.objects.filter(statut='actif').first()
-    cotisations = Cotisation_Animateur.objects.filter(annee=annee_active.annee)
-    serializer = Cotisation_AnimateurSerializer(cotisations, many=True)
-    return Response(serializer.data)
-
 @api_view(['GET'])
 def point_cotisation_enfant(request):
     annee_active = Annee_pastorale.objects.filter(statut='actif').first()
@@ -188,6 +201,15 @@ def point_cotisation_enfant(request):
         'cotisations': serializer.data,
         'total_cotisations': total_cotisations
     })
+
+
+#Cotisation Animateurs
+@api_view(['GET'])
+def cotisation_animateur_list(request):
+    annee_active = Annee_pastorale.objects.filter(statut='actif').first()
+    cotisations = Cotisation_Animateur.objects.filter(annee=annee_active.annee)
+    serializer = Cotisation_AnimateurSerializer(cotisations, many=True)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def point_cotisation_animateur(request):
@@ -204,6 +226,8 @@ def point_cotisation_animateur(request):
     })
 
 
+
+#Responsables
 @api_view(['GET'])
 def get_users(request):
     users = Responsable.objects.all()
@@ -216,7 +240,6 @@ def liste_responsable(request):
     users = Responsable.objects.filter(annee=annee_active.annee)
     serializer = ResponsableSerializer(users, many=True)
     return Response(serializer.data)
-
 
 @api_view(['POST'])
 def ajout_responsable(request):
@@ -243,6 +266,8 @@ def get_fa(request):
     serializer = ResponsableSerializer(responsables_fa, many=True)
     return Response(serializer.data)
 
+
+#Dépenses
 @api_view(['POST'])
 def ajout_depense(request):
     if request.method == 'POST':
@@ -266,7 +291,6 @@ def ajout_depense(request):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        
 @api_view(['GET'])
 def point_depense(request):
     annee_active = Annee_pastorale.objects.filter(statut='actif').first()
@@ -282,6 +306,7 @@ def point_depense(request):
     })
 
 
+#Bénéfice
 @api_view(['POST'])
 def ajout_benefice(request):
     if request.method == 'POST':
@@ -305,7 +330,6 @@ def ajout_benefice(request):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 @api_view(['GET'])
 def point_benefice(request):
     annee_active = Annee_pastorale.objects.filter(statut='actif').first()
@@ -320,6 +344,8 @@ def point_benefice(request):
         'total_benefices': total_benefices
     })
 
+
+#Pénalité
 @api_view(['POST'])
 def ajout_penalite(request):
     if request.method == 'POST':
@@ -358,6 +384,8 @@ def point_penalite(request):
     })
 
 
+
+#Etat de la ca
 @api_view(['POST'])
 def ajout_ancien_solde(request):
     if request.method == 'POST':
@@ -549,13 +577,15 @@ def ajout_bilan_activite(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+
+#Activités
 @api_view(['GET'])
 def get_bilan_activite(request):
     annee_active = Annee_pastorale.objects.filter(statut='actif').first()
     contenu = Bilan_Activite.objects.filter(annee=annee_active.annee)
     serializer = Bilan_ActiviteSerializer(contenu, many=True)
     return Response(serializer.data)
-
 
 @api_view(['POST'])
 def ajout_point_activite(request):
@@ -582,6 +612,9 @@ def get_point_activite(request):
     serializer = Point_ActiviteSerializer(contenu, many=True)
     return Response(serializer.data)
 
+
+
+#Participants Activité
 @api_view(['POST'])
 def ajout_participant(request):
     if request.method == 'POST':
@@ -599,7 +632,6 @@ def ajout_participant(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 @api_view(['GET'])
 def get_participant(request):
@@ -620,8 +652,10 @@ def search_activity(request):
         return JsonResponse(data, safe=False)
     else:
         return JsonResponse({"error": "Aucune activité spécifiée"}, status=400)
-    
 
+
+
+#Enfant
 @api_view(['POST'])
 def ajout_enfant(request):
     if request.method == 'POST':
@@ -643,7 +677,7 @@ def ajout_enfant(request):
 @api_view(['GET'])
 def get_enfant(request):
     annee_active = Annee_pastorale.objects.filter(statut='actif').first()
-    contenu = Enfant.objects.filter(annee=annee_active.annee)
+    contenu = Enfant.objects.filter(annee=annee_active.annee).order_by('nom')
     serializer = EnfantSerializer(contenu, many=True)
     
     return Response(serializer.data)
@@ -659,3 +693,71 @@ def search_niveau(request):
         return JsonResponse(data, safe=False)
     else:
         return JsonResponse({"error": "Aucune activité spécifiée"}, status=400)
+    
+
+
+#Notes
+@csrf_exempt
+def ajout_note(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            enfant_id = data.get('enfant_id')
+            option = data.get('option')
+            note = data.get('note')
+
+            enfant = Enfant.objects.get(id=enfant_id)
+            Note.objects.create(enfant=enfant, option=option, note=note)
+
+            return JsonResponse({'message': 'Note ajoutée avec succès'}, status=201)
+        except Enfant.DoesNotExist:
+            return JsonResponse({'error': "Élève non trouvé"}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    else:
+        return JsonResponse({'error': 'Méthode non autorisée'}, status=405)
+
+@csrf_exempt
+def voir_notes(request):
+    if request.method == 'GET':
+        niveau = request.GET.get('niveau')
+        try:
+            # Récupération des enfants du niveau sélectionné avec leurs notes associées
+            enfants = Enfant.objects.filter(niveau=niveau).prefetch_related(
+                Prefetch('note_set', queryset=Note.objects.all(), to_attr='notes')
+            )
+            
+            # Préparation des données sérialisées
+            data = []
+            for enfant in enfants:
+                enfant_data = EnfantSerializer(enfant).data
+                
+                # Calcul de la moyenne d'interrogation (meilleures notes)
+                interro_notes = [note.note for note in enfant.notes if note.option in [
+                    'Interro 1', 'Interro 2', 'Interro 3', 'Interro 4', 'Interro 5']]
+                
+                if len(interro_notes) >= 2:
+                    top_two_interro = sorted(interro_notes, reverse=True)[:2]
+                    moyenne_interro = sum(top_two_interro) / 2
+                else:
+                    moyenne_interro = sum(interro_notes) / len(interro_notes) if interro_notes else 0
+
+                # Récupération des notes Test 1 et Test 2
+                test_notes = {note.option: note.note for note in enfant.notes if note.option in ['Test 1', 'Test 2']}
+                
+                test1 = test_notes.get('Test 1', 0)
+                test2 = test_notes.get('Test 2', 0)
+                
+                # Calcul de la moyenne générale
+                moyenne_generale = (moyenne_interro + test1 + test2) / 3
+
+                # Ajout des moyennes au résultat
+                enfant_data['moyenne_interro'] = moyenne_interro
+                enfant_data['moyenne_generale'] = moyenne_generale
+                enfant_data['notes'] = NoteSerializer(enfant.notes, many=True).data
+                
+                data.append(enfant_data)
+            
+            return JsonResponse(data, safe=False)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
