@@ -87,11 +87,20 @@ urlpatterns = [
 #Enfants
     path('ajout_enfant/', views.ajout_enfant, name='ajout_enfant'),
     path("all_enfant/", views.get_enfant, name="all_enfant"),
+    path("all_servant/", views.get_servant, name="all_servant"),
     path('search_niveau/', views.search_niveau, name='search_niveau'),
 
 #Notes
     path('ajout_note/', views.ajout_note, name='ajout_note'),
     path('voir_notes/', views.voir_notes, name='voir_notes'),
+
+#Classements
+    path('ajout_classement_veillee_noel/', views.ajout_classement_veillee_noel, name='ajout_classement_veillee_noel'),
+    path('ajout_classement_veillee_nouvel_an/', views.ajout_classement_veillee_nouvel_an, name='ajout_classement_veillee_nouvel_an'),
+    path('ajout_classement_semaine/', views.ajout_classement_semaine, name='ajout_classement_semaine'),
+    path('ajout_classement_triduum_pascal/', views.ajout_classement_triduum_pascal, name='ajout_classement_triduum_pascal'),
+    path('ajout_classement_fete/', views.ajout_classement_fete, name='ajout_classement_fete'),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

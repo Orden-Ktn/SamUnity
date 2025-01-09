@@ -155,3 +155,31 @@ class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
         fields = '__all__'
+
+
+class ClassementVeilleeNoelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Classement_veillee_noel
+        fields = '__all__'
+        
+
+class ClassementVeilleeNouvelAnSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Classement_veillee_nouvel_an
+        fields = '__all__'
+        
+class ClassementSemaineSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Classement_semaine
+        fields = '__all__'
+
+class ClassementTriduumPascalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Classement_triduum_pascal
+        fields = '__all__'
+
+
+class ClassementFeteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Classement_fete
+        fields = '__all__'

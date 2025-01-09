@@ -45,7 +45,7 @@ const menuGroups = [
       {
         icon: (
           <svg
-            className="fill-current text-yellow-500"
+            className="fill-current text-pink-500"
             width="20"
             height="20"
             viewBox="0 0 20 20"
@@ -83,7 +83,7 @@ const menuGroups = [
       {
         icon: (
           <svg
-            className="fill-current text-blue-500"
+            className="fill-current text-red-500"
             width="24"
             height="24"
             viewBox="0 0 24 24"
@@ -106,6 +106,86 @@ const menuGroups = [
           route: "/Formateur/note/fiche_note",
         },
       ],
+      },
+
+      {
+        icon: (
+          <svg
+            className="fill-current text-blue-500"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M4 3.75C3.58579 3.75 3.25 4.08579 3.25 4.5V19.5C3.25 19.9142 3.58579 20.25 4 20.25H20C20.4142 20.25 20.75 19.9142 20.75 19.5V4.5C20.75 4.08579 20.4142 3.75 20 3.75H4ZM5.25 5.25H18.75V18.75H5.25V5.25ZM8 14C8 13.5858 8.33579 13.25 8.75 13.25H15.25C15.6642 13.25 16 13.5858 16 14C16 14.4142 15.6642 14.75 15.25 14.75H8.75C8.33579 14.75 8 14.4142 8 14ZM8 11C8 10.5858 8.33579 10.25 8.75 10.25H15.25C15.6642 10.25 16 10.5858 16 11C16 11.4142 15.6642 11.75 15.25 11.75H8.75C8.33579 11.75 8 11.4142 8 11ZM8 8C8 7.58579 8.33579 7.25 8.75 7.25H15.25C15.6642 7.25 16 7.58579 16 8C16 8.41421 15.6642 8.75 15.25 8.75H8.75C8.33579 8.75 8 8.41421 8 8Z"
+              fill="currentColor"
+            />
+          </svg>
+        ),
+        label: "Classement",
+        route: "#",
+        children: [
+          {
+            label: "Semaine",
+            route: "/Formateur/classement/semaine",
+          },
+          {
+            label: "Réveillon de Noël",
+            route: "/Formateur/classement/veillee_noel",
+          },
+          {
+            label: "Réveillon du Nouvel An",
+            route: "/Formateur/classement/veillee_nouvel_an",
+          },
+          {
+            label: "Triduum Pascal",
+            route: "/Formateur/classement/triduum_pascal",
+          },
+          {
+            label: "Autre Fête",
+            route: "/Formateur/classement/autre_fete",
+          },
+          {
+            label: "Point semaine",
+            route: "#",
+          },
+        ],
+      },
+
+      {
+        icon: (
+          <svg
+            className="fill-current text-orange-600"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M2.25 7C2.25 6.58579 2.58579 6.25 3 6.25H13C13.4142 6.25 13.75 6.58579 13.75 7C13.75 7.41421 13.4142 7.75 13 7.75H3C2.58579 7.75 2.25 7.41421 2.25 7ZM16.5 6.25C16.7951 6.25 17.0628 6.42309 17.1839 6.69223L21.6839 16.6922C21.8539 17.07 21.6855 17.514 21.3078 17.6839C20.93 17.8539 20.486 17.6855 20.3161 17.3078L18.8787 14.1136H14.1213L12.6839 17.3078C12.514 17.6855 12.07 17.8539 11.6922 17.6839C11.3145 17.514 11.1461 17.07 11.3161 16.6922L15.8161 6.69223C15.9372 6.42309 16.2049 6.25 16.5 6.25ZM14.7963 12.6136H18.2037L16.5 8.82764L14.7963 12.6136ZM2.25 12C2.25 11.5858 2.58579 11.25 3 11.25H10C10.4142 11.25 10.75 11.5858 10.75 12C10.75 12.4142 10.4142 12.75 10 12.75H3C2.58579 12.75 2.25 12.4142 2.25 12ZM2.25 17C2.25 16.5858 2.58579 16.25 3 16.25H8C8.41421 16.25 8.75 16.5858 8.75 17C8.75 17.4142 8.41421 17.75 8 17.75H3C2.58579 17.75 2.25 17.4142 2.25 17Z"
+              fill=""
+            />
+          </svg>
+        ),
+        label: "Epreuves",
+        route: "#",
+        children: [
+        {
+          label: "Dépôt",
+          route: "/Formateur/epreuve/depot",
+        },
+        {
+          label: "Epreuves reçues",
+          route: "/Formateur/epreuve/all_epreuve",
+        },
+        ]
       },
 
       {
@@ -137,34 +217,23 @@ const menuGroups = [
       {
         icon: (
           <svg
-            className="fill-current text-orange-500"
+            xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 48 48"
+            className="fill-current"
           >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M2.25 7C2.25 6.58579 2.58579 6.25 3 6.25H13C13.4142 6.25 13.75 6.58579 13.75 7C13.75 7.41421 13.4142 7.75 13 7.75H3C2.58579 7.75 2.25 7.41421 2.25 7ZM16.5 6.25C16.7951 6.25 17.0628 6.42309 17.1839 6.69223L21.6839 16.6922C21.8539 17.07 21.6855 17.514 21.3078 17.6839C20.93 17.8539 20.486 17.6855 20.3161 17.3078L18.8787 14.1136H14.1213L12.6839 17.3078C12.514 17.6855 12.07 17.8539 11.6922 17.6839C11.3145 17.514 11.1461 17.07 11.3161 16.6922L15.8161 6.69223C15.9372 6.42309 16.2049 6.25 16.5 6.25ZM14.7963 12.6136H18.2037L16.5 8.82764L14.7963 12.6136ZM2.25 12C2.25 11.5858 2.58579 11.25 3 11.25H10C10.4142 11.25 10.75 11.5858 10.75 12C10.75 12.4142 10.4142 12.75 10 12.75H3C2.58579 12.75 2.25 12.4142 2.25 12ZM2.25 17C2.25 16.5858 2.58579 16.25 3 16.25H8C8.41421 16.25 8.75 16.5858 8.75 17C8.75 17.4142 8.41421 17.75 8 17.75H3C2.58579 17.75 2.25 17.4142 2.25 17Z"
-              fill=""
-            />
+            <path fill="#4285F4" d="M25.5 4L5.1 39.9 10 48h28l4.9-8.1L25.5 4z"/>
+            <path fill="#34A853" d="M5.1 39.9L10 48h28l4.9-8.1H5.1z"/>
+            <path fill="#FBBC05" d="M25.5 4L5.1 39.9h9.9l16.5-27L25.5 4z"/>
+            <path fill="#EA4335" d="M35.5 39.9h9.9L25.5 4l-4.9 8.1L35.5 39.9z"/>
           </svg>
         ),
-        label: "Epreuves",
-        route: "#",
-        children: [
-        {
-          label: "Dépôt",
-          route: "/Formateur/epreuve/depot",
-        },
-        {
-          label: "Epreuves reçues",
-          route: "/Formateur/epreuve/all_epreuve",
-        },
-        ]
+        
+        label: "Dossier Drive Formation",
+        route: "https://drive.google.com/drive/folders/1UyLoLrGFgved6Y9QoVklCJ25X-mGBF0w?usp=sharing",
       },
+
     ],
   },
 ];

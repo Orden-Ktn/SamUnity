@@ -14,7 +14,8 @@ from django.db.models import Sum
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpRequest
 from django.views.decorators.http import require_GET
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Q
+
 
 #Authentification
 @api_view(['POST']) 
@@ -702,9 +703,31 @@ def ajout_enfant(request):
 @api_view(['GET'])
 def get_enfant(request):
     annee_active = Annee_pastorale.objects.filter(statut='actif').first()
-    contenu = Enfant.objects.filter(annee=annee_active.annee).order_by('niveau', 'nom')
-    serializer = EnfantSerializer(contenu, many=True)
+    niveau1 = "Acolytat"
+    niveau2 = "Porte-bénitier"
+    niveau3 = "Céroféraire"
+
+    contenu = Enfant.objects.filter(
+        annee=annee_active.annee,
+        niveau__in=[niveau1, niveau2, niveau3]
+    ).order_by('niveau', 'nom')
     
+    serializer = EnfantSerializer(contenu, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_servant(request):
+    annee_active = Annee_pastorale.objects.filter(statut='actif').first()
+    niveau1 = "Acolytat"
+    niveau2 = "Porte-bénitier"
+    niveau3 = "Céroféraire"
+
+    contenu = Enfant.objects.filter(
+        annee=annee_active.annee,
+        niveau__in=[niveau1, niveau2, niveau3]
+    ).order_by('niveau', 'nom')
+    
+    serializer = EnfantSerializer(contenu, many=True)
     return Response(serializer.data)
 
 
@@ -787,3 +810,103 @@ def voir_notes(request):
             return JsonResponse(data, safe=False)
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=400)
+        
+
+#Classement veillee noel
+@api_view(['POST'])
+def ajout_classement_veillee_noel(request):
+    if request.method == 'POST':
+        # Récupérer l'année active
+        annee_active = Annee_pastorale.objects.filter(statut='actif').first()  # Ajustez cette requête selon votre logique
+        if not annee_active:
+            return Response({"error": "Aucune année active trouvée."}, status=status.HTTP_404_NOT_FOUND)
+
+        # Ajouter l'année active aux données de la requête
+        data = request.data
+        data['annee'] = annee_active.annee  # Assurez-vous que 'annee' est le bon champ
+
+        serializer = ClassementVeilleeNoelSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+#Classement veillee nouvel an
+@api_view(['POST'])
+def ajout_classement_veillee_nouvel_an(request):
+    if request.method == 'POST':
+        # Récupérer l'année active
+        annee_active = Annee_pastorale.objects.filter(statut='actif').first()  # Ajustez cette requête selon votre logique
+        if not annee_active:
+            return Response({"error": "Aucune année active trouvée."}, status=status.HTTP_404_NOT_FOUND)
+
+        # Ajouter l'année active aux données de la requête
+        data = request.data
+        data['annee'] = annee_active.annee  # Assurez-vous que 'annee' est le bon champ
+
+        serializer = ClassementVeilleeNouvelAnSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+#Classement semaine
+@api_view(['POST'])
+def ajout_classement_semaine(request):
+    if request.method == 'POST':
+        # Récupérer l'année active
+        annee_active = Annee_pastorale.objects.filter(statut='actif').first()  # Ajustez cette requête selon votre logique
+        if not annee_active:
+            return Response({"error": "Aucune année active trouvée."}, status=status.HTTP_404_NOT_FOUND)
+
+        # Ajouter l'année active aux données de la requête
+        data = request.data
+        data['annee'] = annee_active.annee  # Assurez-vous que 'annee' est le bon champ
+
+        serializer = ClassementSemaineSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+#Classement triduum pascal
+@api_view(['POST'])
+def ajout_classement_triduum_pascal(request):
+    if request.method == 'POST':
+        # Récupérer l'année active
+        annee_active = Annee_pastorale.objects.filter(statut='actif').first()  # Ajustez cette requête selon votre logique
+        if not annee_active:
+            return Response({"error": "Aucune année active trouvée."}, status=status.HTTP_404_NOT_FOUND)
+
+        # Ajouter l'année active aux données de la requête
+        data = request.data
+        data['annee'] = annee_active.annee  # Assurez-vous que 'annee' est le bon champ
+
+        serializer = ClassementTriduumPascalSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+#Classement fete
+@api_view(['POST'])
+def ajout_classement_fete(request):
+    if request.method == 'POST':
+        # Récupérer l'année active
+        annee_active = Annee_pastorale.objects.filter(statut='actif').first()  # Ajustez cette requête selon votre logique
+        if not annee_active:
+            return Response({"error": "Aucune année active trouvée."}, status=status.HTTP_404_NOT_FOUND)
+
+        # Ajouter l'année active aux données de la requête
+        data = request.data
+        data['annee'] = annee_active.annee  # Assurez-vous que 'annee' est le bon champ
+
+        serializer = ClassementFeteSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
