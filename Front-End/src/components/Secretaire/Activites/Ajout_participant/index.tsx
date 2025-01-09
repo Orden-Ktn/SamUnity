@@ -30,7 +30,7 @@ export default function Ajout_bilan() {
       try {
         const response = await fetch(
           "http://localhost:8000/api/app/all_enfant/",
-          {
+          { 
             method: "GET",
             headers: {
               "Content-Type": "application/json",

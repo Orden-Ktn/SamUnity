@@ -18,8 +18,19 @@ from django.db.models import Prefetch, Q
 
 
 #Authentification
-@api_view(['POST']) 
+@api_view(['POST'])
 def create_user(request):
+    # Vérifier si un utilisateur avec le même nom et poste existe déjà
+    mandature = request.data.get('mandature')
+    poste = request.data.get('poste')
+
+    if User.objects.filter(Q(mandature=mandature) & Q(poste=poste)).exists():
+        return Response(
+            {"error": "Un utilisateur avec ce poste existe déjà."},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    # Créer un nouvel utilisateur si aucune correspondance trouvée
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()
@@ -50,7 +61,7 @@ def create_user(request):
             )
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
+
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
@@ -231,7 +242,16 @@ def point_cotisation_animateur(request):
 #Responsables
 @api_view(['GET'])
 def get_users(request):
-    users = Responsable.objects.all()
+    annee_active = Annee_pastorale.objects.filter(statut='actif').first()
+    users = Responsable.objects.filter(annee=annee_active.annee)
+    serializer = ResponsableSerializer(users, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_sg(request):
+    poste = "SG"
+    annee_active = Annee_pastorale.objects.filter(statut='actif').first()
+    users = Responsable.objects.filter(annee=annee_active.annee, statut=poste)
     serializer = ResponsableSerializer(users, many=True)
     return Response(serializer.data)
 
@@ -703,14 +723,9 @@ def ajout_enfant(request):
 @api_view(['GET'])
 def get_enfant(request):
     annee_active = Annee_pastorale.objects.filter(statut='actif').first()
-    niveau1 = "Acolytat"
-    niveau2 = "Porte-bénitier"
-    niveau3 = "Céroféraire"
-
     contenu = Enfant.objects.filter(
-        annee=annee_active.annee,
-        niveau__in=[niveau1, niveau2, niveau3]
-    ).order_by('niveau', 'nom')
+        annee=annee_active.annee
+    ).order_by('nom')
     
     serializer = EnfantSerializer(contenu, many=True)
     return Response(serializer.data)
@@ -730,6 +745,19 @@ def get_servant(request):
     serializer = EnfantSerializer(contenu, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def get_cathecumene(request):
+    annee_active = Annee_pastorale.objects.filter(statut='actif').first()
+    statut = "Oui"
+   
+    contenu = Enfant.objects.filter(
+        annee=annee_active.annee,
+        catechese=statut
+    ).order_by('nom')
+    
+    serializer = EnfantSerializer(contenu, many=True)
+    return Response(serializer.data)
+
 
 @require_GET
 def search_niveau(request):
@@ -742,6 +770,19 @@ def search_niveau(request):
         return JsonResponse(data, safe=False)
     else:
         return JsonResponse({"error": "Aucune activité spécifiée"}, status=400)
+    
+
+@require_GET
+def search_catechese(request):
+    catechese = request.GET.get('catechese')
+    if catechese:
+        # Filtrer les résultats en fonction du statut ce catechese
+        results = Enfant.objects.filter(catechese=catechese)
+
+        data = [{"id": item.id, "nom": item.nom, "prenom": item.prenom} for item in results]
+        return JsonResponse(data, safe=False)
+    else:
+        return JsonResponse({"error": "Aucune enfant spécifié"}, status=400)
     
 
 

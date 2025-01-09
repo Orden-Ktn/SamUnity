@@ -3,7 +3,7 @@ from django.contrib.auth.hashers import make_password, check_password
 
 class User(models.Model):
     nom = models.CharField(max_length=255)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=False)
     poste = models.CharField(max_length=50)
     mandature = models.CharField(max_length=50)
     password = models.CharField(max_length=255)  # Pour stocker le mot de passe haché

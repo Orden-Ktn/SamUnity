@@ -31,6 +31,7 @@ urlpatterns = [
     path('ajout_responsable/', views.ajout_responsable, name='ajout_responsable'),
     path('liste_responsable/', views.liste_responsable, name='liste_responsable'),
     path("all_fa/", views.get_fa, name="all_fa"),
+    path("sg/", views.get_sg, name="sg"),
 
 #Dépenses
     path('ajout_depense/', views.ajout_depense, name='ajout_depense'),
@@ -88,7 +89,9 @@ urlpatterns = [
     path('ajout_enfant/', views.ajout_enfant, name='ajout_enfant'),
     path("all_enfant/", views.get_enfant, name="all_enfant"),
     path("all_servant/", views.get_servant, name="all_servant"),
+    path("all_cathecumene/", views.get_cathecumene, name="all_cathecumene"),
     path('search_niveau/', views.search_niveau, name='search_niveau'),
+    path('search_catechese/', views.search_catechese, name='search_catechese'),
 
 #Notes
     path('ajout_note/', views.ajout_note, name='ajout_note'),

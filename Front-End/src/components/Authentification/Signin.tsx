@@ -40,6 +40,9 @@ export default function SigninWithPassword() {
           case "Organisateur":
             window.location.href = "/Organisateur/dashboard";
             break;
+            case "Animateur":
+            window.location.href = "/Animateur/dashboard";
+            break;
           default:
             window.location.href = "/dashboard";
         }

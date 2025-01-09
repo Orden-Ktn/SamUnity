@@ -110,7 +110,7 @@ class MontantCalculeSerializer(serializers.ModelSerializer):
     class Meta:
         model = MontantCalcule
         fields = [
-            'id',  # Incluez l'ID si vous souhaitez le renvoyer
+            'id', 
             'ancien_solde',
             'total_cotisations',
             'total_benefices',

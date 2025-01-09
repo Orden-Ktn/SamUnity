@@ -1,8 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
 import SidebarItem from "./SidebarItem";
 import ClickOutside from "../ClickOutside";
 import useLocalStorage from "@/hooks/useLocalStorage";
@@ -233,6 +231,10 @@ const menuGroups = [
         label: "Bilan d'activité",
         route: "#",
         children: [
+          {
+            label: "Liste des participants",
+            route: "/Tresorier/bilan_activite/point_participant",
+          },
           {
             label: "Ajout du point",
             route: "/Tresorier/bilan_activite/bilan_response",
