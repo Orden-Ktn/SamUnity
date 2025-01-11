@@ -162,6 +162,7 @@ export default function SigninWithPassword() {
           <option value="Initiateur">Initiateur</option>
           <option value="Trésorier">Trésorier</option>
           <option value="Organisateur">Organisateur</option>
+          <option value="Animateur">Animateur</option>
         </select>
       </div>
 

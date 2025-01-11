@@ -15,6 +15,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpRequest
 from django.views.decorators.http import require_GET
 from django.db.models import Prefetch, Q
+from django.core.files.base import ContentFile
+from django.utils.dateparse import parse_date
+
 
 
 #Authentification
@@ -855,7 +858,7 @@ def voir_notes(request):
 
 #Classement veillee noel
 @api_view(['POST'])
-def ajout_classement_veillee_noel(request):
+def ajout_classement_reveillons(request):
     if request.method == 'POST':
         # Récupérer l'année active
         annee_active = Annee_pastorale.objects.filter(statut='actif').first()  # Ajustez cette requête selon votre logique
@@ -866,31 +869,39 @@ def ajout_classement_veillee_noel(request):
         data = request.data
         data['annee'] = annee_active.annee  # Assurez-vous que 'annee' est le bon champ
 
-        serializer = ClassementVeilleeNoelSerializer(data=data)
+        serializer = ClassementReveillonSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+def search_classement_reveillon(request):
+    # Récupérer les paramètres de la requête
+    reveillon = request.GET.get('reveillon')
+    date = request.GET.get('date')
 
-#Classement veillee nouvel an
-@api_view(['POST'])
-def ajout_classement_veillee_nouvel_an(request):
-    if request.method == 'POST':
+    if not reveillon or not date:
+        return JsonResponse({"error": "Les deux informations sont requises."}, status=400)
+
+    try:
         # Récupérer l'année active
-        annee_active = Annee_pastorale.objects.filter(statut='actif').first()  # Ajustez cette requête selon votre logique
+        annee_active = Annee_pastorale.objects.filter(statut='actif').first()
         if not annee_active:
-            return Response({"error": "Aucune année active trouvée."}, status=status.HTTP_404_NOT_FOUND)
+            return JsonResponse({"error": "Aucune année active trouvée."}, status=404)
 
-        # Ajouter l'année active aux données de la requête
-        data = request.data
-        data['annee'] = annee_active.annee  # Assurez-vous que 'annee' est le bon champ
+        # Filtrer les données par plage de dates et année active
+        classements = Classement_reveillon.objects.filter(
+            Q(reveillon__gte=reveillon) & Q(date__lte=date) & Q(annee=annee_active.annee)
+        )
+        if not classements.exists():
+            return JsonResponse({"error": "Aucune donnée trouvée pour ce réveillon et cette date."}, status=404)
 
-        serializer = ClassementVeilleeNouvelAnSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # Formater les résultats
+        results = list(classements.values())
+        return JsonResponse(results, safe=False)
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
 
 
 #Classement semaine
@@ -912,6 +923,34 @@ def ajout_classement_semaine(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+def search_classement_semaine(request):
+    # Récupérer les paramètres de la requête
+    date_debut = request.GET.get('date_debut')
+    date_fin = request.GET.get('date_fin')
+
+    if not date_debut or not date_fin:
+        return JsonResponse({"error": "Les deux dates sont requises."}, status=400)
+
+    try:
+        # Récupérer l'année active
+        annee_active = Annee_pastorale.objects.filter(statut='actif').first()
+        if not annee_active:
+            return JsonResponse({"error": "Aucune année active trouvée."}, status=404)
+
+        # Filtrer les données par plage de dates et année active
+        classements = Classement_semaine.objects.filter(
+            Q(date_debut__gte=date_debut) & Q(date_fin__lte=date_fin) & Q(annee=annee_active.annee)
+        )
+        if not classements.exists():
+            return JsonResponse({"error": "Aucune donnée trouvée pour ces dates."}, status=404)
+
+        # Formater les résultats
+        results = list(classements.values())
+        return JsonResponse(results, safe=False)
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+    
 
 #Classement triduum pascal
 @api_view(['POST'])
@@ -931,6 +970,16 @@ def ajout_classement_triduum_pascal(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def search_classement_triduum(request):
+    annee_active = Annee_pastorale.objects.filter(statut='actif').first()
+    contenu = Classement_triduum_pascal.objects.filter(
+        annee=annee_active.annee)
+    
+    serializer = ClassementTriduumPascalSerializer(contenu, many=True)
+    return Response(serializer.data)
+
     
 
 #Classement fete
@@ -951,3 +1000,30 @@ def ajout_classement_fete(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+def search_classement_fete(request):
+    # Récupérer les paramètres de la requête
+    fete = request.GET.get('fete')
+
+    if not fete:
+        return JsonResponse({"error": "La fête est requise."}, status=400)
+
+    try:
+        # Récupérer l'année active
+        annee_active = Annee_pastorale.objects.filter(statut='actif').first()
+        if not annee_active:
+            return JsonResponse({"error": "Aucune année active trouvée."}, status=404)
+
+        # Filtrer les données par plage de dates et année active
+        classements = Classement_fete.objects.filter(fete=fete, annee=annee_active.annee)
+        
+        if not classements.exists():
+            return JsonResponse({"error": "Aucune donnée trouvée pour cette fête."}, status=404)
+
+        # Formater les résultats
+        results = list(classements.values())
+        return JsonResponse(results, safe=False)
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)

@@ -19,7 +19,7 @@ const menuGroups = [
       {
         icon: (
           <svg
-            className="text- fill-current text-purple-500"
+            className="text- fill-current text-gray-500"
             width="24"
             height="24"
             viewBox="0 0 24 24"
@@ -126,32 +126,64 @@ const menuGroups = [
             />
           </svg>
         ),
-        label: "Classement",
+        label: "Ajout de Classement",
         route: "#",
         children: [
           {
             label: "Semaine",
-            route: "/Formateur/classement/semaine",
+            route: "/Formateur/classement/ajout/semaine",
           },
           {
-            label: "Réveillon de Noël",
-            route: "/Formateur/classement/veillee_noel",
-          },
-          {
-            label: "Réveillon du Nouvel An",
-            route: "/Formateur/classement/veillee_nouvel_an",
+            label: "Réveillons",
+            route: "/Formateur/classement/ajout/reveillons",
           },
           {
             label: "Triduum Pascal",
-            route: "/Formateur/classement/triduum_pascal",
+            route: "/Formateur/classement/ajout/triduum_pascal",
           },
           {
-            label: "Autre Fête",
-            route: "/Formateur/classement/autre_fete",
+            label: "Fêtes",
+            route: "/Formateur/classement/ajout/fetes",
           },
+        ],
+      },
+
+      {
+        icon: (
+          <svg
+            className="fill-current text-purple-500"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M4 3.75C3.58579 3.75 3.25 4.08579 3.25 4.5V19.5C3.25 19.9142 3.58579 20.25 4 20.25H20C20.4142 20.25 20.75 19.9142 20.75 19.5V4.5C20.75 4.08579 20.4142 3.75 20 3.75H4ZM5.25 5.25H18.75V18.75H5.25V5.25ZM8 14C8 13.5858 8.33579 13.25 8.75 13.25H15.25C15.6642 13.25 16 13.5858 16 14C16 14.4142 15.6642 14.75 15.25 14.75H8.75C8.33579 14.75 8 14.4142 8 14ZM8 11C8 10.5858 8.33579 10.25 8.75 10.25H15.25C15.6642 10.25 16 10.5858 16 11C16 11.4142 15.6642 11.75 15.25 11.75H8.75C8.33579 11.75 8 11.4142 8 11ZM8 8C8 7.58579 8.33579 7.25 8.75 7.25H15.25C15.6642 7.25 16 7.58579 16 8C16 8.41421 15.6642 8.75 15.25 8.75H8.75C8.33579 8.75 8 8.41421 8 8Z"
+              fill="currentColor"
+            />
+          </svg>
+        ),
+        label: "Point de Classement",
+        route: "#",
+        children: [
           {
             label: "Point semaine",
-            route: "#",
+            route: "/Formateur/classement/point/point_semaine",
+          },
+          {
+            label: "Point réveillon",
+            route: "/Formateur/classement/point/point_reveillon",
+          },
+          {
+            label: "Point triduum pascal",
+            route: "/Formateur/classement/point/point_triduum",
+          },
+          {
+            label: "Point fête",
+            route: "/Formateur/classement/point/point_fete",
           },
         ],
       },

@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.hashers import make_password, check_password
 
+    
+
 class User(models.Model):
     nom = models.CharField(max_length=255)
     email = models.EmailField(unique=False)
@@ -181,40 +183,25 @@ class Note(models.Model):
         return f"{self.enfant.nom} - {self.option} - {self.note}"
     
 
-class Classement_veillee_noel(models.Model):
+class Classement_reveillon(models.Model):
+    reveillon = models.CharField(max_length=500)
     date = models.CharField(max_length=500)
-    veillee_noel_heure1 = models.CharField(max_length=500)
-    ap1_veillee_noel = models.CharField(max_length=700)
-    as1_veillee_noel = models.CharField(max_length=700)
-    pc1_veillee_noel = models.CharField(max_length=700)
-    ce1_veillee_noel1 = models.CharField(max_length=700)
-    ce2_veillee_noel1 = models.CharField(max_length=700)
-    th1_veillee_noel = models.CharField(max_length=700)
-    na1_veillee_noel = models.CharField(max_length=700)
-    veillee_noel_heure2 = models.CharField(max_length=500)
-    ap2_veillee_noel = models.CharField(max_length=700)
-    as2_veillee_noel = models.CharField(max_length=700)
-    pc2_veillee_noel = models.CharField(max_length=700)
-    ce1_veillee_noel2 = models.CharField(max_length=700)
-    ce2_veillee_noel2 = models.CharField(max_length=700)
-    th2_veillee_noel = models.CharField(max_length=700)
-    na2_veillee_noel = models.CharField(max_length=700)
-    annee = models.CharField(max_length=255)
-
-class Classement_veillee_nouvel_an(models.Model):
-    date = models.CharField(max_length=500)
-    veillee_nouvel_an_heure1 = models.CharField(max_length=500)
-    ap1_veillee_nouvel_an = models.CharField(max_length=700)
-    as1_veillee_nouvel_an = models.CharField(max_length=700)
-    pc1_veillee_nouvel_an = models.CharField(max_length=700)
-    th1_veillee_nouvel_an = models.CharField(max_length=700)
-    na1_veillee_nouvel_an = models.CharField(max_length=700)
-    veillee_nouvel_an_heure2 = models.CharField(max_length=500)
-    ap2_veillee_nouvel_an = models.CharField(max_length=700)
-    as2_veillee_nouvel_an = models.CharField(max_length=700)
-    pc2_veillee_nouvel_an = models.CharField(max_length=700)
-    th2_veillee_nouvel_an = models.CharField(max_length=700)
-    na2_veillee_nouvel_an = models.CharField(max_length=700)
+    heure1 = models.CharField(max_length=500)
+    ap1 = models.CharField(max_length=700)
+    as1 = models.CharField(max_length=700)
+    pc1 = models.CharField(max_length=700)
+    ce1_1 = models.CharField(max_length=700)
+    ce2_1 = models.CharField(max_length=700)
+    th1 = models.CharField(max_length=700)
+    na1 = models.CharField(max_length=700)
+    heure2 = models.CharField(max_length=500)
+    ap2 = models.CharField(max_length=700)
+    as2 = models.CharField(max_length=700)
+    pc2 = models.CharField(max_length=700)
+    ce1_2 = models.CharField(max_length=700)
+    ce2_2 = models.CharField(max_length=700)
+    th2 = models.CharField(max_length=700)
+    na2 = models.CharField(max_length=700)
     annee = models.CharField(max_length=255)
 
 
@@ -228,8 +215,9 @@ class Classement_semaine(models.Model):
     mar_heure = models.CharField(max_length=700)
     ap_mar = models.CharField(max_length=700)
     as_mar = models.CharField(max_length=700)
-    ap_mer_19h00 = models.CharField(max_length=700)
-    as_mer_19h00 = models.CharField(max_length=700)
+    mer_heure = models.CharField(max_length=700)
+    ap_mer = models.CharField(max_length=700)
+    as_mer = models.CharField(max_length=700)
     ap_jeu_6h30 = models.CharField(max_length=700)
     as_jeu_6h30 = models.CharField(max_length=700)
     ven_heure = models.CharField(max_length=700)
@@ -272,12 +260,12 @@ class Classement_triduum_pascal(models.Model):
     na2_jeudi_saint = models.CharField(max_length=700)
     ce1_jeudi_saint2 = models.CharField(max_length=700)
     ce2_jeudi_saint2 = models.CharField(max_length=700)
-    samedi_saint_heure2 = models.CharField(max_length=700)
-    ap2_samedi_saint = models.CharField(max_length=700)
-    as2_samedi_saint = models.CharField(max_length=700)
-    pc2_samedi_saint = models.CharField(max_length=700)
-    th2_samedi_saint = models.CharField(max_length=700)
-    na2_samedi_saint = models.CharField(max_length=700)
+    samedi_saint_heure = models.CharField(max_length=700)
+    ap_samedi_saint = models.CharField(max_length=700)
+    as_samedi_saint = models.CharField(max_length=700)
+    pc_samedi_saint = models.CharField(max_length=700)
+    th_samedi_saint = models.CharField(max_length=700)
+    na_samedi_saint = models.CharField(max_length=700)
     ce1_samedi_saint = models.CharField(max_length=700)
     ce2_samedi_saint = models.CharField(max_length=700)
     pb_samedi_saint = models.CharField(max_length=700)
@@ -290,11 +278,10 @@ class Classement_triduum_pascal(models.Model):
 
 class Classement_fete(models.Model):
     fete = models.CharField(max_length=700)
+    heure = models.CharField(max_length=700)
     ap_fete = models.CharField(max_length=700)
     as_fete = models.CharField(max_length=700)
     pc_fete = models.CharField(max_length=700)
-    ce1_fete = models.CharField(max_length=700)
-    ce2_fete = models.CharField(max_length=700)
     th_fete = models.CharField(max_length=700)
     na_fete = models.CharField(max_length=700)
     annee = models.CharField(max_length=255)

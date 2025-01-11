@@ -40,7 +40,7 @@ export default function SigninWithPassword() {
           case "Organisateur":
             window.location.href = "/Organisateur/dashboard";
             break;
-            case "Animateur":
+          case "Animateur":
             window.location.href = "/Animateur/dashboard";
             break;
           default:
@@ -124,6 +124,7 @@ export default function SigninWithPassword() {
             <option value="Initiateur">Initiateur</option>
             <option value="Trésorier">Trésorier</option>
             <option value="Organisateur">Organisateur</option>
+            <option value="Animateur">Animateur</option>
           </select>
         </div>
       </div>

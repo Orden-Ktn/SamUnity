@@ -157,16 +157,11 @@ class NoteSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ClassementVeilleeNoelSerializer(serializers.ModelSerializer):
+class ClassementReveillonSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Classement_veillee_noel
-        fields = '__all__'
-        
+        model = Classement_reveillon
+        fields = '__all__'      
 
-class ClassementVeilleeNouvelAnSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Classement_veillee_nouvel_an
-        fields = '__all__'
         
 class ClassementSemaineSerializer(serializers.ModelSerializer):
     class Meta:

@@ -277,6 +277,12 @@ export default function Ajout_bilan() {
                       >
                         3ème année Université
                       </option>
+                      <option
+                        value="Autre"
+                        className="text-body dark:text-bodydark"
+                      >
+                        Autre
+                      </option>
                     </select>
                   </div>
 

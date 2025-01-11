@@ -98,11 +98,15 @@ urlpatterns = [
     path('voir_notes/', views.voir_notes, name='voir_notes'),
 
 #Classements
-    path('ajout_classement_veillee_noel/', views.ajout_classement_veillee_noel, name='ajout_classement_veillee_noel'),
-    path('ajout_classement_veillee_nouvel_an/', views.ajout_classement_veillee_nouvel_an, name='ajout_classement_veillee_nouvel_an'),
+    path('ajout_classement_reveillons/', views.ajout_classement_reveillons, name='ajout_classement_reveillons'),
     path('ajout_classement_semaine/', views.ajout_classement_semaine, name='ajout_classement_semaine'),
     path('ajout_classement_triduum_pascal/', views.ajout_classement_triduum_pascal, name='ajout_classement_triduum_pascal'),
     path('ajout_classement_fete/', views.ajout_classement_fete, name='ajout_classement_fete'),
+    path('search_classement_semaine/', views.search_classement_semaine, name='search_classement_semaine'),
+    path('search_classement_reveillon/', views.search_classement_reveillon, name='search_classement_reveillon'),
+    path('search_classement_triduum/', views.search_classement_triduum, name='search_classement_triduum'),
+    path('search_classement_fete/', views.search_classement_fete, name='search_classement_fete'),
+
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
