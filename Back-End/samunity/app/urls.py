@@ -107,7 +107,10 @@ urlpatterns = [
     path('search_classement_triduum/', views.search_classement_triduum, name='search_classement_triduum'),
     path('search_classement_fete/', views.search_classement_fete, name='search_classement_fete'),
 
-
+#Signature
+    path('upload_signature/', views.upload_signature, name='upload_signature'),
+    path('get_signature/', views.get_signature, name='get_signature'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 

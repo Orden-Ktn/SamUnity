@@ -178,3 +178,17 @@ class ClassementFeteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Classement_fete
         fields = '__all__'
+
+
+class SignatureSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Signature
+        fields = ['id', 'image', 'annee_active', 'uploaded_at', 'image_url']
+
+    def get_image_url(self, obj):
+        request = self.context.get('request')
+        return request.build_absolute_uri(obj.image.url) if obj.image else None
+
+

@@ -138,3 +138,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # L'URL publique pour accéder aux fichiers téléchargés
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'  
+
+

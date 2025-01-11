@@ -285,3 +285,12 @@ class Classement_fete(models.Model):
     th_fete = models.CharField(max_length=700)
     na_fete = models.CharField(max_length=700)
     annee = models.CharField(max_length=255)
+
+class Signature(models.Model):
+    image = models.ImageField(upload_to='signatures/')
+    annee_active = models.CharField(max_length=255)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Signature {self.id} - {self.annee_active}"
+

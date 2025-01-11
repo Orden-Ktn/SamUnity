@@ -25,7 +25,7 @@ const ImageUpload = () => {
     formData.append("image", image);
 
     try {
-      const response = await fetch("http://localhost:8000/api/upload-image/", {
+      const response = await fetch("http://localhost:8000/api/app/upload_signature/", {
         method: "POST",
         body: formData,
       });
@@ -33,7 +33,6 @@ const ImageUpload = () => {
       if (response.ok) {
         setSuccess(true);
         setErrors(""); // Réinitialise les erreurs
-        alert("Signature téléchargée et enregistrée avec succès !");
       } else {
         const data = await response.json();
         setErrors(data.message || "Erreur inconnue lors du téléchargement.");
@@ -76,11 +75,20 @@ const ImageUpload = () => {
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col gap-5.5 p-6.5">
                 <div>
+                  <p className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+                    Voici les étapes à suivre pour déposer votre signature : <br />
+                    1- Faites votre signature, de préférence avec une taille plus
+                    ou moins grande, sur une feuille blanche. <br />
+                    2- Prenez une photo de votre signature et enregistrez-la. <br /> 
+                    3- Effacer l'arrière-plan de l'image <a className="text-purple-500" href="https://www.remove.bg/fr/upload"><em>en cliquant ici</em></a> puis suivez les instructions et téléchargez l'image. <br />
+                    4- Soumettez l'image téléchargée dans le formulaire suivant, puis enregistrez-la.
+                  </p>
                   <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
                     Signature
                   </label>
                   <input
                     type="file"
+                    name="sg_signature"
                     accept="image/*"
                     onChange={handleFileChange}
                     className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"

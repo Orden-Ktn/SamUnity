@@ -15,9 +15,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpRequest
 from django.views.decorators.http import require_GET
 from django.db.models import Prefetch, Q
-from django.core.files.base import ContentFile
-from django.utils.dateparse import parse_date
-
+from django.conf import settings
+import os
 
 
 #Authentification
@@ -1027,3 +1026,43 @@ def search_classement_fete(request):
 
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
+
+
+
+@api_view(['POST'])
+def upload_signature(request):
+    if request.method == 'POST':
+        # Récupérer l'année active
+        annee_active = Annee_pastorale.objects.filter(statut='actif').first()  # Ajustez le filtre selon votre modèle
+        if not annee_active:
+            return Response({"error": "Aucune année active trouvée."}, status=status.HTTP_404_NOT_FOUND)
+
+        # Ajouter l'année active aux données de la requête
+        data = request.data.copy()
+        data['annee_active'] = annee_active.annee  # Assurez-vous que 'annee_active' correspond au champ du modèle Signature
+
+        # Valider et enregistrer les données
+        serializer = SignatureSerializer(data=data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+@api_view(['GET'])
+def get_signature(request):
+    print("Requête reçue:", request)  # Loggez la requête
+    if request.method == 'GET':
+        annee_active = Annee_pastorale.objects.filter(statut='actif').first()
+        if not annee_active:
+            return Response({"error": "Aucune année active trouvée."}, status=status.HTTP_404_NOT_FOUND)
+        signature = Signature.objects.filter(annee_active=annee_active.annee).first()
+        if not signature:
+            return Response({"error": "Aucune signature trouvée pour cette année."}, status=status.HTTP_404_NOT_FOUND)
+        file_url = os.path.join(settings.MEDIA_URL, signature.image.name)
+        print("URL de l'image:", request.build_absolute_uri(file_url))  # Loggez l'URL générée
+        return Response({"image_url": request.build_absolute_uri(file_url)}, status=status.HTTP_200_OK)
+
+
