@@ -1,4 +1,4 @@
-import DataStatsOne from "@/components/Coordonnateur/DataStats/DataStatsOne";
+import DataStatsOne from "@/components/Commun/DataStats/DataStatsOne";
 import ECommerce from "@/components/Tresorier/Dashboard/E-commerce";
 import DefaultLayout from "@/components/Tresorier/Layouts/DefaultLaout";
 import { Metadata } from "next";

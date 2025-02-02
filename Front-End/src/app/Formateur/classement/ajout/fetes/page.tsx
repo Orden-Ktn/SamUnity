@@ -1,7 +1,8 @@
 import React from "react";
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Formateur/Layouts/DefaultLaout";
-import Fetes from "@/components/Formateur/Classement/Ajout/Fetes";
+import Fetes from "@/components/Commun/Classement/Ajout/Fetes";
+
 
 
 

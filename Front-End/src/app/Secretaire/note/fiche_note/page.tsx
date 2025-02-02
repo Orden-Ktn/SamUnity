@@ -1,6 +1,6 @@
+import Table from "@/components/Commun/Notes/Fiche_note/Table";
 import Breadcrumb from "@/components/Secretaire/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Secretaire/Layouts/DefaultLaout";
-import Table from "@/components/Secretaire/Notes/Fiche_note/Table";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

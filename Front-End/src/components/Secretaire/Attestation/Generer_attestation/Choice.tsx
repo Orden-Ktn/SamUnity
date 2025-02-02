@@ -145,14 +145,7 @@ const Choice = () => {
             <p className="text-center text-dark">Aucun enfant sélectionné.</p>
           )}
           {error && <p className="text-center text-red-500">{error}</p>}
-          <div className="flex items-center justify-center space-x-20">
-            <Image
-              src={"/images/signature_sg.png"}
-              alt="Logo"
-              width={145}
-              height={5}
-              className="dark:opacity-30"
-            />
+          <div className="flex items-center justify-center space-x-70">
             <Image
               src={"/images/cachet_bureau.png"}
               alt="Logo"
@@ -194,14 +187,7 @@ const Choice = () => {
             <p className="text-center text-dark">Aucun enfant sélectionné.</p>
           )}
           {error && <p className="text-center text-red-500">{error}</p>}
-          <div className="flex items-center justify-center space-x-20">
-            <Image
-              src={"/images/signature_sg.png"}
-              alt="Logo"
-              width={145}
-              height={5}
-              className="dark:opacity-30"
-            />
+          <div className="flex items-center justify-center space-x-70">
             <Image
               src={"/images/cachet_bureau.png"}
               alt="Logo"
@@ -243,14 +229,7 @@ const Choice = () => {
             <p className="text-center text-dark">Aucun enfant sélectionné.</p>
           )}
           {error && <p className="text-center text-red-500">{error}</p>}
-          <div className="flex items-center justify-center space-x-20">
-            <Image
-              src={"/images/signature_sg.png"}
-              alt="Logo"
-              width={145}
-              height={5}
-              className="dark:opacity-30"
-            />
+          <div className="flex items-center justify-center space-x-70">
             <Image
               src={"/images/cachet_bureau.png"}
               alt="Logo"

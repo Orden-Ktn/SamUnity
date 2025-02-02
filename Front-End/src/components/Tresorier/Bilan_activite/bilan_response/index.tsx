@@ -210,7 +210,7 @@ export default function Ajout_bilan() {
 
                   <div className="w-1/2">
                     <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-                      Montant récolté
+                      Participation
                     </label>
                     <input
                       type="number"
@@ -226,7 +226,7 @@ export default function Ajout_bilan() {
                 <div className="flex gap-6">
                 <div className="w-1/2">
                     <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
-                      Montant dépensé
+                      Dépense
                     </label>
                     <input
                       type="number"

@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Secretaire/Layouts/DefaultLaout";
-import Ajout_enfant_samuel from "@/components/Secretaire/Enfant_samuel/Ajout_enfant_samuel";
+import Ajout_enfant_samuel from "@/components/Commun/Enfant_samuel/Ajout_enfant_samuel";
 
 export const metadata: Metadata = {
   title: "SamUnity",

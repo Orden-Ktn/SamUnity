@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/Organisateur/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Organisateur/Layouts/DefaultLaout";
-import Table from "@/components/Organisateur/Notes/Fiche_note/Table";
+import Table from "@/components/Commun/Notes/Fiche_note/Table";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

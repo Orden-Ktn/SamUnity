@@ -315,7 +315,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           sidebarOpen
             ? "translate-x-0 duration-300 ease-linear"
             : "-translate-x-full"
-        }`}
+        }`} 
       >
         {/* <!-- SIDEBAR HEADER --> */}
         <div className="rounded-[0px] border border-stroke text-center sm:p-1.5">

@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Secretaire/Layouts/DefaultLaout";
-import Depot_epreuve from "@/components/Secretaire/Depot_epreuve";
+import Depot_epreuve from "@/components/Commun/Depot_epreuve";
 
 export const metadata: Metadata = {
   title: "SamUnity",

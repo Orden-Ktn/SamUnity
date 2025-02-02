@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
 class Depot_epreuveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Depot_epreuve
-        fields = ['epreuve', 'corrige_type', 'niveau', 'test', 'annee']
+        fields = '__all__'
 
     def validate_epreuve(self, value):
         allowed_extensions = ['.docx']
@@ -36,133 +36,116 @@ class Depot_epreuveSerializer(serializers.ModelSerializer):
 class Ajout_annee_pastoraleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Annee_pastorale
-        fields = ['id', 'annee', 'statut']
+        fields = '__all__'
         read_only_fields = ['statut']
 
 
 class Cotisation_EnfantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cotisation_Enfant
-        fields = ['date', 'annee', 'montant']
+        fields = '__all__'
 
 
 class Cotisation_AnimateurSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cotisation_Animateur
-        fields = ['mois', 'annee', 'nom', 'montant']
+        fields = '__all__'
 
 
 class ResponsableSerializer(serializers.ModelSerializer):
     class Meta:
         model = Responsable
-        fields = ['nom', 'statut', 'annee']
+        fields = '__all__'
 
 
 class DepenseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Depense
-        fields = ['date', 'montant', 'motif', 'caisse', 'annee']
+        fields = '__all__'
 
 
 class BeneficeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Benefice
-        fields = ['date', 'montant', 'motif', 'annee']
+        fields = '__all__'
 
 
 class PenaliteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Penalite
-        fields = ['date', 'montant', 'motif', 'annee']
+        fields = '__all__'
 
 
 class Ancien_SoldeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ancien_Solde
-        fields = ['solde', 'annee']
+        fields = '__all__'
 
 
 class Objectif_TGSerializer(serializers.ModelSerializer):
     class Meta:
         model = Objectif_TG
-        fields = ['objectif', 'annee']
+        fields = '__all__'
 
 
 class Objectif_OGSerializer(serializers.ModelSerializer):
     class Meta:
         model = Objectif_OG
-        fields = ['objectif', 'annee']
+        fields = '__all__'
 
 
 class Objectif_SGSerializer(serializers.ModelSerializer):
     class Meta:
         model = Objectif_SG
-        fields = ['objectif', 'annee']
+        fields = '__all__'
 
 
 class Objectif_FOSerializer(serializers.ModelSerializer):
     class Meta:
         model = Objectif_FO
-        fields = ['objectif', 'annee']
-
+        fields = '__all__'
 
 class MontantCalculeSerializer(serializers.ModelSerializer):
     class Meta:
         model = MontantCalcule
-        fields = [
-            'id', 
-            'ancien_solde',
-            'total_cotisations',
-            'total_benefices',
-            'total_penalites',
-            'total_depenses',
-            'nouveau_solde',
-            'annee',
-        ]
-
+        fields = '__all__'
 
 class ActiviteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Activite
-        fields = ['intitule', 'annee']
-
+        fields = '__all__'
 
 class Bilan_ActiviteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bilan_Activite
-        fields = ['activite', 'effectif', 'montant', 'ressource', 'difficulte', 'annee']
+        fields = '__all__'
 
 
 class Point_ActiviteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Point_Activite
-        fields = ['activite', 'effectif', 'montantrecolte', 'montantdepense', 'benefice', 'perte', 'annee']
-
+        fields = '__all__'
 
 class Participant_ActiviteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Participant_Activite
-        fields = ['activite', 'nom', 'prenom', 'niveau', 'annee']
-
+        fields = '__all__'
 
 class EnfantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Enfant
-        fields = ['nom', 'prenom', 'age', 'niveau_etude', 'niveau', 'catechese', 'annee']
-
+        fields = '__all__'
 
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
         fields = '__all__'
 
-
 class ClassementReveillonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Classement_reveillon
-        fields = '__all__'      
+        fields = '__all__'
 
-        
 class ClassementSemaineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Classement_semaine
@@ -173,22 +156,8 @@ class ClassementTriduumPascalSerializer(serializers.ModelSerializer):
         model = Classement_triduum_pascal
         fields = '__all__'
 
-
 class ClassementFeteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Classement_fete
         fields = '__all__'
-
-
-class SignatureSerializer(serializers.ModelSerializer):
-    image_url = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Signature
-        fields = ['id', 'image', 'annee_active', 'uploaded_at', 'image_url']
-
-    def get_image_url(self, obj):
-        request = self.context.get('request')
-        return request.build_absolute_uri(obj.image.url) if obj.image else None
-
 

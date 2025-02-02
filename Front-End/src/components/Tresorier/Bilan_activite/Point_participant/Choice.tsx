@@ -147,7 +147,8 @@ const Choice = () => {
                   Paroisse Sainte Bernadette Soubirous de Hêvié Dodji <br />
                   Liste des participants {activity} <br /><br />
                 </h2>
-                <table className="w-full border-collapse border">
+                <div className="sm:p-7.5 max-w-full overflow-x-auto">
+                <table className="w-full border-collapse border table-auto">
                   <thead>
                     <tr className="bg-gray-200">
                       <th className="border px-4 py-2 text-dark">N°</th>
@@ -174,6 +175,7 @@ const Choice = () => {
                     </tr>
                   </tfoot>
                 </table>
+                </div>
               </div>
             ) : (
               <p className="text-center">Aucune donnée trouvée.</p>

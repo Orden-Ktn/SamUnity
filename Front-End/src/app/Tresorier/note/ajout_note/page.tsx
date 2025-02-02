@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/Tresorier/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Tresorier/Layouts/DefaultLaout";
-import Choice from "@/components/Tresorier/Notes/Ajout_note/Choice";
+import Choice from "@/components/Commun/Notes/Ajout_note/Choice";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

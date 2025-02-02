@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Formateur/Layouts/DefaultLaout";
-import Semaine from "@/components/Formateur/Classement/Ajout/Semaine";
+import Semaine from "@/components/Commun/Classement/Ajout/Semaine";
 
 
 

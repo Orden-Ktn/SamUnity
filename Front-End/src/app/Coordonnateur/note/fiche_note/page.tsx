@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/Coordonnateur/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Coordonnateur/Layouts/DefaultLaout";
-import Table from "@/components/Coordonnateur/Notes/Fiche_note/Table";
+import Table from "@/components/Commun/Notes/Fiche_note/Table";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

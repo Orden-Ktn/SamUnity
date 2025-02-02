@@ -1,5 +1,5 @@
+import Table from "@/components/Commun/Enfant_samuel/Liste_generale/Table";
 import Breadcrumb from "@/components/Formateur/Breadcrumbs/Breadcrumb";
-import Table from "@/components/Formateur/Enfant_samuel/Liste_generale/Table";
 import DefaultLayout from "@/components/Formateur/Layouts/DefaultLaout";
 import { Metadata } from "next";
 

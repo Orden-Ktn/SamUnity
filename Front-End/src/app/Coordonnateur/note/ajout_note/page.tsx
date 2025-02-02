@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/Coordonnateur/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Coordonnateur/Layouts/DefaultLaout";
-import Choice from "@/components/Coordonnateur/Notes/Ajout_note/Choice";
+import Choice from "@/components/Commun/Notes/Ajout_note/Choice";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

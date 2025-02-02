@@ -1,5 +1,5 @@
+import Choice from "@/components/Commun/Classement/Point/Point_fete/Choice";
 import Breadcrumb from "@/components/Formateur/Breadcrumbs/Breadcrumb";
-import Choice from "@/components/Formateur/Classement/Point/Point_fete/Choice";
 import DefaultLayout from "@/components/Formateur/Layouts/DefaultLaout";
 import { Metadata } from "next";
 

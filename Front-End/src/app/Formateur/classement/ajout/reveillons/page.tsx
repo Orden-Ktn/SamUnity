@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Formateur/Layouts/DefaultLaout";
-import Reveillons from "@/components/Formateur/Classement/Ajout/Reveillons";
+import Reveillons from "@/components/Commun/Classement/Ajout/Reveillons";
 
 
 

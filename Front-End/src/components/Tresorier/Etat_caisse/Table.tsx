@@ -89,8 +89,7 @@ const Table = () => {
                         Ancien <br /> solde
                       </th>
                       <td
-                        className={`bg-[orange] p-4 dark:bg-dark-2`}
-                      >
+                        className={`bg-[orange] p-4 dark:bg-dark-2`}>
                         <h6 className="text-dark text-left dark:text-white">
                           {montant.ancien_solde} <br /> FCFA
                         </h6>
@@ -100,7 +99,7 @@ const Table = () => {
                       <th className="min-w-[220px] bg-[skyblue] px-4 py-4 font-medium text-dark text-left dark:text-white xl:pl-7.5">
                         Total des <br /> cotisations
                       </th>
-                      <td className={`bg-[skyblue] dark:bg-dark-2`}>
+                      <td className={`bg-[skyblue] p-4 dark:bg-dark-2`}>
                         <h6 className="text-dark text-left dark:text-white">
                           {montant.total_cotisations} <br /> FCFA
                         </h6>
@@ -143,7 +142,7 @@ const Table = () => {
                       <th className="min-w-[220px] bg-[violet] px-4 py-4 font-medium text-dark text-left dark:text-white xl:pl-7.5">
                         Total des <br /> pénalités
                       </th>
-                      <td className={`bg-[violet] text-center dark:bg-dark-2`}>
+                      <td className={`bg-[violet] p-4 text-center dark:bg-dark-2`}>
                         <h6 className="text-dark text-left dark:text-white">
                           {montant.total_penalites} <br /> FCFA
                         </h6>
@@ -187,7 +186,7 @@ const Table = () => {
                         Nouveau <br /> solde
                       </th>
                       <td
-                        className={`bg-[lawngreen] text-left dark:bg-dark-2`}
+                        className={`bg-[lawngreen] p-4 text-left dark:bg-dark-2`}
                       >
                         <h6 className="text-dark dark:text-white">
                           {montant.nouveau_solde} <br /> FCFA

@@ -1,6 +1,6 @@
+import Choice from "@/components/Commun/Notes/Ajout_note/Choice";
 import Breadcrumb from "@/components/Formateur/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Formateur/Layouts/DefaultLaout";
-import Choice from "@/components/Formateur/Notes/Ajout_note/Choice";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

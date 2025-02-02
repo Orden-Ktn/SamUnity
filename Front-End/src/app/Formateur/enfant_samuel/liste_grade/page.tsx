@@ -1,5 +1,5 @@
+import Choice from "@/components/Commun/Enfant_samuel/Liste_grade/Choice";
 import Breadcrumb from "@/components/Formateur/Breadcrumbs/Breadcrumb";
-import Choice from "@/components/Formateur/Enfant_samuel/Liste_grade/Choice";
 import DefaultLayout from "@/components/Formateur/Layouts/DefaultLaout";
 import { Metadata } from "next";
 

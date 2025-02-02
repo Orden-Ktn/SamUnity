@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Formateur/Layouts/DefaultLaout";
-import Triduum_pascal from "@/components/Formateur/Classement/Ajout/Triduum_pascal";
+import Triduum_pascal from "@/components/Commun/Classement/Ajout/Triduum_pascal";
 
 
 

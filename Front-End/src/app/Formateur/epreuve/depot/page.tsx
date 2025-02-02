@@ -1,8 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Formateur/Layouts/DefaultLaout";
-import Depot_epreuve from "@/components/Formateur/Epreuves/depot";
-
+import Depot_epreuve from "@/components/Commun/Depot_epreuve";
 
 
 export const metadata: Metadata = {

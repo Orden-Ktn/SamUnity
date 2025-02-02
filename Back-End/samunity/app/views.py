@@ -1,4 +1,3 @@
-from venv import logger
 import json
 from django.http import JsonResponse
 from rest_framework import status
@@ -8,15 +7,11 @@ from django.core.mail import send_mail
 from .models import *
 from .serializers import *
 from rest_framework.parsers import MultiPartParser, FormParser
-from rest_framework.response import Response
 from rest_framework.decorators import api_view, parser_classes
 from django.db.models import Sum
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpRequest
 from django.views.decorators.http import require_GET
 from django.db.models import Prefetch, Q
-from django.conf import settings
-import os
 
 
 #Authentification
@@ -42,12 +37,12 @@ def create_user(request):
         message = f"""
             <html>
                 <body>
-                    <p>Bonjour {user.nom}, {user.poste} du groupe.</p>
-                    <p>Votre compte a été créé avec succès.</p>
-                    <p>Merci d'avoir rejoint le progiciel SamUnity !</p>
-                    <p>Parle Seigneur, ton serviteur écoute.</p>
-                    <p>Pour vous connecter, veuillez cliquer sur le lien suivant : 
-                    <a href="http://localhost:3000/Authentification/connexion">Se connecter</a></p>
+                    Bonjour {user.nom}, {user.poste} du groupe.
+                    Votre compte a été créé avec succès.
+                    Merci d'avoir rejoint le progiciel SamUnity !
+                    Parle Seigneur, ton serviteur écoute.
+                    Pour vous connecter, veuillez cliquer sur le lien suivant : 
+                    <a href="http://localhost:3000/Authentification/connexion">Se connecter</a>
                 </body>
             </html>
         """
@@ -152,7 +147,7 @@ def get_annee_active(request):
     annee_active = Annee_pastorale.objects.filter(statut='actif').first()  # Utiliser first() pour obtenir le premier élément
     if annee_active:
         return Response({'annee': annee_active.annee})  # Retourner l'année active
-    return Response({'annee': 'Non définie'})  # Si aucun résultat trouvé
+    return Response({'annee': ''})  # Si aucun résultat trouvé
 
 
 #Cotisation Enfants
@@ -179,29 +174,6 @@ def ajout_cotisation_enfant(request):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-@api_view(['POST'])
-def ajout_cotisation_animateur(request):
-    if request.method == 'POST':
-        # Récupérer l'année active
-        annee_active = Annee_pastorale.objects.filter(statut='actif').first()  # Ajustez cette requête selon votre logique
-        if not annee_active:
-            return Response({"error": "Aucune année active trouvée."}, status=status.HTTP_404_NOT_FOUND)
-
-        # Ajouter l'année active aux données de la requête
-        data = request.data
-        data['annee'] = annee_active.annee  # Assurez-vous que 'annee' est le bon champ
-
-        # Sérialisation des données
-        serializer = Cotisation_AnimateurSerializer(data=data)
-        if serializer.is_valid():
-            # Sauvegarder la pénalité dans la base de données
-            serializer.save()
-            # Après l'ajout, on met à jour le solde courant
-            solde_courant()  # Appel de la vue solde_courant pour mettre à jour les montants
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 @api_view(['GET'])
 def point_cotisation_enfant(request):
     annee_active = Annee_pastorale.objects.filter(statut='actif').first()
@@ -239,6 +211,28 @@ def point_cotisation_animateur(request):
         'total_cotisations': total_cotisations
     })
 
+@api_view(['POST'])
+def ajout_cotisation_animateur(request):
+    if request.method == 'POST':
+        # Récupérer l'année active
+        annee_active = Annee_pastorale.objects.filter(statut='actif').first()  # Ajustez cette requête selon votre logique
+        if not annee_active:
+            return Response({"error": "Aucune année active trouvée."}, status=status.HTTP_404_NOT_FOUND)
+
+        # Ajouter l'année active aux données de la requête
+        data = request.data
+        data['annee'] = annee_active.annee  # Assurez-vous que 'annee' est le bon champ
+
+        # Sérialisation des données
+        serializer = Cotisation_AnimateurSerializer(data=data)
+        if serializer.is_valid():
+            # Sauvegarder la pénalité dans la base de données
+            serializer.save()
+            # Après l'ajout, on met à jour le solde courant
+            solde_courant()  # Appel de la vue solde_courant pour mettre à jour les montants
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 #Responsables
@@ -408,7 +402,7 @@ def point_penalite(request):
 
 
 
-#Etat de la ca
+#Etat de la caisse
 @api_view(['POST'])
 def ajout_ancien_solde(request):
     if request.method == 'POST':
@@ -433,7 +427,7 @@ def ajout_ancien_solde(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-@csrf_exempt  # Désactive CSRF pour les tests (à enlever en prod)
+@csrf_exempt  
 def solde_courant(request=None):
     # Récupérer l'année active
     annee_active = Annee_pastorale.objects.filter(statut='actif').first()
@@ -479,6 +473,7 @@ def get_montant_calculer(request):
     return Response(serializer.data)
 
 
+#Objectifs TG, OG, SG, Formation
 @api_view(['POST'])
 def ajout_objectif_tresorerie(request):
     if request.method == 'POST':
@@ -529,7 +524,6 @@ def get_objectifs_secretariat(request):
     serializer = Objectif_SGSerializer(objectif, many=True)
     return Response(serializer.data)
 
-
 @api_view(['POST'])
 def ajout_objectif_organisation(request):
     if request.method == 'POST':
@@ -554,7 +548,6 @@ def get_objectifs_organisation(request):
     objectif = Objectif_OG.objects.filter(annee=annee_active.annee)
     serializer = Objectif_OGSerializer(objectif, many=True)
     return Response(serializer.data)
-
 
 @api_view(['POST'])
 def ajout_objectif_formation(request):
@@ -582,6 +575,7 @@ def get_objectifs_formation(request):
     return Response(serializer.data)
 
 
+#Activités
 @api_view(['POST'])
 def ajout_activite(request):
     if request.method == 'POST':
@@ -608,6 +602,7 @@ def get_activite(request):
     return Response(serializer.data)
 
 
+#Bilan d'activité OG
 @api_view(['POST'])
 def ajout_bilan_activite(request):
     if request.method == 'POST':
@@ -626,9 +621,6 @@ def ajout_bilan_activite(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-
-#Activités
 @api_view(['GET'])
 def get_bilan_activite(request):
     annee_active = Annee_pastorale.objects.filter(statut='actif').first()
@@ -636,6 +628,8 @@ def get_bilan_activite(request):
     serializer = Bilan_ActiviteSerializer(contenu, many=True)
     return Response(serializer.data)
 
+
+#Bilan d'activité SG
 @api_view(['POST'])
 def ajout_point_activite(request):
     if request.method == 'POST':
@@ -662,8 +656,7 @@ def get_point_activite(request):
     return Response(serializer.data)
 
 
-
-#Participants Activité
+#Participants Activités
 @api_view(['POST'])
 def ajout_participant(request):
     if request.method == 'POST':
@@ -702,8 +695,7 @@ def search_activity(request):
         return JsonResponse({"error": "Aucune activité spécifiée"}, status=400)
 
 
-
-#Enfant
+#Enfants
 @api_view(['POST'])
 def ajout_enfant(request):
     if request.method == 'POST':
@@ -760,7 +752,6 @@ def get_cathecumene(request):
     serializer = EnfantSerializer(contenu, many=True)
     return Response(serializer.data)
 
-
 @require_GET
 def search_niveau(request):
     niveau = request.GET.get('niveau')
@@ -773,7 +764,6 @@ def search_niveau(request):
     else:
         return JsonResponse({"error": "Aucune activité spécifiée"}, status=400)
     
-
 @require_GET
 def search_catechese(request):
     catechese = request.GET.get('catechese')
@@ -786,7 +776,6 @@ def search_catechese(request):
     else:
         return JsonResponse({"error": "Aucune enfant spécifié"}, status=400)
     
-
 
 #Notes
 @csrf_exempt
@@ -855,7 +844,7 @@ def voir_notes(request):
             return JsonResponse({'error': str(e)}, status=400)
         
 
-#Classement veillee noel
+#Classement réveillon
 @api_view(['POST'])
 def ajout_classement_reveillons(request):
     if request.method == 'POST':
@@ -979,7 +968,6 @@ def search_classement_triduum(request):
     serializer = ClassementTriduumPascalSerializer(contenu, many=True)
     return Response(serializer.data)
 
-    
 
 #Classement fete
 @api_view(['POST'])
@@ -999,7 +987,6 @@ def ajout_classement_fete(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 def search_classement_fete(request):
     # Récupérer les paramètres de la requête
@@ -1026,43 +1013,3 @@ def search_classement_fete(request):
 
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
-
-
-
-@api_view(['POST'])
-def upload_signature(request):
-    if request.method == 'POST':
-        # Récupérer l'année active
-        annee_active = Annee_pastorale.objects.filter(statut='actif').first()  # Ajustez le filtre selon votre modèle
-        if not annee_active:
-            return Response({"error": "Aucune année active trouvée."}, status=status.HTTP_404_NOT_FOUND)
-
-        # Ajouter l'année active aux données de la requête
-        data = request.data.copy()
-        data['annee_active'] = annee_active.annee  # Assurez-vous que 'annee_active' correspond au champ du modèle Signature
-
-        # Valider et enregistrer les données
-        serializer = SignatureSerializer(data=data, context={'request': request})
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-@api_view(['GET'])
-def get_signature(request):
-    print("Requête reçue:", request)  # Loggez la requête
-    if request.method == 'GET':
-        annee_active = Annee_pastorale.objects.filter(statut='actif').first()
-        if not annee_active:
-            return Response({"error": "Aucune année active trouvée."}, status=status.HTTP_404_NOT_FOUND)
-        signature = Signature.objects.filter(annee_active=annee_active.annee).first()
-        if not signature:
-            return Response({"error": "Aucune signature trouvée pour cette année."}, status=status.HTTP_404_NOT_FOUND)
-        file_url = os.path.join(settings.MEDIA_URL, signature.image.name)
-        print("URL de l'image:", request.build_absolute_uri(file_url))  # Loggez l'URL générée
-        return Response({"image_url": request.build_absolute_uri(file_url)}, status=status.HTTP_200_OK)
-
-
